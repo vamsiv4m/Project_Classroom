@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/create_classroom"
+        android:onClick="create_classroom"/>
+    <item android:title="@string/join_classroom" />
+    <item
+        android:checkable="false"
+        android:title="@string/join_videoclass" />
+</menu>

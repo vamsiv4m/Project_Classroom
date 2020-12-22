@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Project Classroom</string>
+    <string name="todo">TODO</string>
+    <string name="hello">TODO</string>
+    <string name="project_classroom">Project Classroom</string>
+    <string name="create_classroom">Create Classroom</string>
+    <string name="join_classroom">Join Classroom</string>
+    <string name="join_videoclass">Join VideoClass</string>
+    <string name="create">create</string>
+    <string name="create_class">Create Class</string>
+    <string name="login">Login</string>
+    <string name="get_otp">Get OTP</string>
+    <string name="class_name">Class name</string>
+    <string name="section">Section</string>
+    <string name="room">Room</string>
+    <string name="subject">Subject</string>
+</resources>

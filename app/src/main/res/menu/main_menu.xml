@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/a"
+            android:icon="@drawable/ic_baseline_settings"
+            android:title="Settings" />
+        <item
+            android:icon="@drawable/ic_baseline_feedback_24"
+            android:title="Help And Feedback"
+            android:id="@+id/b"/>
+
+        <item
+            android:icon="@drawable/ic_baseline_policy_24"
+            android:title="Terms and Privacy"
+            android:id="@+id/c"
+        />
+
+    </group>
+
+</menu>
