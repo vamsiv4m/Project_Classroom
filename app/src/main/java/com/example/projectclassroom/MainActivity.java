@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        //To disable night mode view for our app ...
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         menuicon = findViewById(R.id.menuicon);
@@ -49,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-
         return true;
     }
 
@@ -61,14 +61,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void navigationDrawer(){
         navigation.bringToFront();
         navigation.setNavigationItemSelectedListener(this);
-        menuicon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (drawerLayout.isDrawerVisible(GravityCompat.START))
-                    drawerLayout.closeDrawer(GravityCompat.START);
-                else
-                    drawerLayout.isDrawerVisible(GravityCompat.START);
-            }
+        menuicon.setOnClickListener((View v) -> {
+            if (drawerLayout.isDrawerVisible(GravityCompat.START))
+                drawerLayout.closeDrawer(GravityCompat.START);
+            else
+                drawerLayout.isDrawerVisible(GravityCompat.START);
         });
     }
 }
