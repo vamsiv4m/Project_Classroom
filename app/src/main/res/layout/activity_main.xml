@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    tools:openDrawer="start"
+
     android:id="@+id/drawerLayout">
 
 
@@ -34,17 +34,6 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/menuicon"
-            android:layout_width="25dp"
-            android:layout_height="22dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView"
-            app:srcCompat="@drawable/navigation_menu_bar" />
-
-        <ImageView
             android:id="@+id/add"
             android:layout_width="30dp"
             android:layout_height="33dp"
@@ -61,15 +50,38 @@
             app:srcCompat="@drawable/ic_baseline_add_24"
             android:contentDescription="TODO" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/menuicon"
+            android:layout_width="26dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/navigation_menu_bar"
+            android:onClick="menu"
+            app:backgroundTint="#000000"
+            app:layout_constraintBottom_toBottomOf="@+id/textView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView" />
+
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="43dp"
-            android:layout_marginLeft="43dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
             android:fontFamily="@font/open_sans_semibold"
             android:text="@string/project_classroom"
-            android:textSize="20sp"
+            android:textSize="21sp"
             app:layout_constraintBottom_toBottomOf="@+id/add"
             app:layout_constraintStart_toEndOf="@+id/menuicon"
             app:layout_constraintTop_toTopOf="@+id/add" />

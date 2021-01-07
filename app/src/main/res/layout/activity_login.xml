@@ -11,9 +11,10 @@
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="64dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -26,15 +27,56 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
+            android:layout_marginBottom="6dp"
             android:layout_weight="1"
             android:fontFamily="@font/open_sans_semibold"
-            android:text="Login"
             android:onClick="login"
+            android:text="Login"
             android:textColor="#151515"
             app:backgroundTint="#FFD500"
+            app:layout_constraintBottom_toTopOf="@+id/createanaccount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout"
+            app:layout_constraintVertical_bias="0.95" />
+
+        <Button
+            android:id="@+id/signInwithgoogle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:drawableLeft="@drawable/googleicon"
+            android:drawingCacheQuality="auto"
+            android:text="Sign In with Google"
+            android:textColor="#090909"
+            android:onClick="signInwithGoogle"
+            app:backgroundTint="#FFFFFF"
+            app:layout_constraintEnd_toEndOf="@+id/createanaccount"
+            app:layout_constraintStart_toStartOf="@+id/createanaccount"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/login"
+            app:layout_constraintStart_toStartOf="@+id/login"
+            app:layout_constraintTop_toBottomOf="@+id/signInwithgoogle"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="or"
+            app:layout_constraintEnd_toEndOf="@+id/createanaccount"
+            app:layout_constraintStart_toStartOf="@+id/createanaccount"
+            app:layout_constraintTop_toBottomOf="@+id/createanaccount" />
 
         <TextView
             android:id="@+id/createanaccount"
@@ -44,8 +86,35 @@
             android:onClick="createanaccount"
             android:text="don't have an account? Create an account"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/login"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:boxBackgroundColor="#FFFFFF"
+            app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/userInputLayout"
+           >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="14sp"
+                app:textInputLayoutFocusedRectEnabled="false" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/userInputLayout"
@@ -71,51 +140,13 @@
                 app:textInputLayoutFocusedRectEnabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordInputLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:boxBackgroundColor="#FFFFFF"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userInputLayout"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:textSize="14sp"
-                app:textInputLayoutFocusedRectEnabled="false" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="72dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createanaccount" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="64dp"
         android:fontFamily="@font/open_sans_bold"
         android:text="Login"
         android:textSize="30sp"

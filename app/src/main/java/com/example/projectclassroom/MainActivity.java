@@ -9,17 +9,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.material.navigation.NavigationView;
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, PopupMenu.OnMenuItemClickListener {
+import com.google.firebase.auth.FirebaseAuth;
 
+import model.SessionManager;
+
+import static com.google.firebase.auth.FirebaseAuth.getInstance;
+
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,PopupMenu.OnMenuItemClickListener {
     //variables
-    ImageView menuicon;
+    Button menuicon;
     NavigationView navigation;
     DrawerLayout drawerLayout;
-//    static final float END_SCALE = 0.7f;
+
     ImageView create;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +42,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout = findViewById(R.id.drawerLayout);
         navigation = findViewById(R.id.navigation);
         navigationDrawer();
+        GoogleSignInAccount signInAccount= GoogleSignIn.getLastSignedInAccount(this);
+        if(signInAccount!=null){
+            View nav=navigation.getHeaderView(0);
+            TextView googleusername=nav.findViewById(R.id.unameheader);
+            TextView googlemailid=nav.findViewById(R.id.emailheader);
+            googleusername.setText(signInAccount.getDisplayName());
+            googlemailid.setText(signInAccount.getEmail());
+        }
+        else {
+            View nav=navigation.getHeaderView(0);
+            TextView googleusername=nav.findViewById(R.id.unameheader);
+            TextView googlemailid=nav.findViewById(R.id.emailheader);
+            googleusername.setText("");
+            googlemailid.setText("Mail-Id");
 
+        }
     }
 
     @Override
@@ -60,12 +84,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void navigationDrawer(){
         navigation.bringToFront();
+        View nav=navigation.getHeaderView(0);
+        TextView ntext=nav.findViewById(R.id.unameheader);
+//        SessionManager sessionManager=new SessionManager(MainActivity.this);
+//        HashMap<String,String> userdetails=sessionManager.getuserDetails();
+//        String user=userdetails.get(sessionManager.Key_name);
+
         navigation.setNavigationItemSelectedListener(this);
-        menuicon.setOnClickListener((View v) -> {
-            if (drawerLayout.isDrawerVisible(GravityCompat.START))
-                drawerLayout.closeDrawer(GravityCompat.START);
-            else
-                drawerLayout.isDrawerVisible(GravityCompat.START);
-        });
+    }
+
+    public void logout(MenuItem item) {
+        //Logout
+        FirebaseAuth.getInstance().signOut();
+        Intent i= new Intent(getApplicationContext(),LoginActivity.class);
+        View nav=navigation.getHeaderView(0);
+        TextView googlename=nav.findViewById(R.id.unameheader);
+        TextView googleemail=nav.findViewById(R.id.emailheader);
+        googlename.setText("username");
+        googleemail.setText("email-id");
+        startActivity(i);
+        finish();
+    }
+
+    public void joinClassroom(MenuItem item) {
+        Intent intent=new Intent(this, JoinClass.class);
+        startActivity(intent);
+    }
+
+    public void menu(View view) {
+        if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else {
+            drawerLayout.isDrawerVisible(GravityCompat.START);
+        }
     }
 }

@@ -52,32 +52,6 @@
             app:layout_constraintVertical_bias="1.0" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            app:boxBackgroundColor="#FFFFFF"
-            app:boxBackgroundMode="outline"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/createphoneno"
-            app:layout_constraintEnd_toStartOf="@+id/createphoneno"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/createemail">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/code"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:hint="Code"
-                android:inputType="phone"
-                android:paddingLeft="20dp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/createpasswd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,10 +77,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/createphoneno"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:layout_marginLeft="80dp"
             android:layout_marginTop="16dp"
             app:boxBackgroundColor="#FFFFFF"
             app:boxBackgroundMode="outline"
@@ -171,5 +143,15 @@
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar3"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

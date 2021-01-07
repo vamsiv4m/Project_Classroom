@@ -6,16 +6,19 @@
             android:icon="@drawable/ic_baseline_settings"
             android:title="Settings" />
         <item
+            android:id="@+id/b"
             android:icon="@drawable/ic_baseline_feedback_24"
-            android:title="Help And Feedback"
-            android:id="@+id/b"/>
+            android:title="Help And Feedback" />
 
         <item
-            android:icon="@drawable/ic_baseline_policy_24"
-            android:title="Terms and Privacy"
             android:id="@+id/c"
-        />
+            android:icon="@drawable/ic_baseline_policy_24"
+            android:title="Terms and Privacy" />
 
+    </group>
+    <group>
+        <item android:title="Logout"
+            android:onClick="logout"/>
     </group>
 
 </menu>
