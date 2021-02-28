@@ -97,10 +97,10 @@ public class JoinClass extends AppCompatActivity {
                                 Log.d("o",""+o);
                                 Map<String,Object> obj= (Map<String, Object>) o;
                                 Toast.makeText(JoinClass.this, ""+obj.get("subject"), Toast.LENGTH_SHORT).show();
-                                Createuserdatapojo createuserdatapojo=new Createuserdatapojo((String)obj.get("classname"),(String)obj.get("section"),(String)obj.get("room"),(String)obj.get("subject"),(String)obj.get("class_code"));
+                                //Createuserdatapojo createuserdatapojo=new Createuserdatapojo((String)obj.get("classname"),(String)obj.get("section"),(String)obj.get("room"),(String)obj.get("subject"),(String)obj.get("class_code"));
                                 database=FirebaseDatabase.getInstance();
                                 myref=database.getReference("users").child(user);
-                                myref.child("class").child((String)obj.get(subject)).setValue(createuserdatapojo);
+                                myref.child("class").child((String)obj.get(subject)).setValue("");
                                 try {
                                     Thread.sleep(500);
                                     finish();

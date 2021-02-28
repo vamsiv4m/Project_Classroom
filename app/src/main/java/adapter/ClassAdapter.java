@@ -1,19 +1,24 @@
 package adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.projectclassroom.ClassDetails;
 import com.example.projectclassroom.R;
 
@@ -62,6 +67,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(getItemViewType(position)==0) {
@@ -69,6 +75,10 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder1.subject.setText(list.get(position).getSubject());
             holder1.section.setText(list.get(position).getSection());
             holder1.professor.setText(list.get(position).getClassname());
+           // holder1.bgconstraint.setBackground(list.get(position).getImageurl());
+            Glide.with(context).load(list.get(position).getImageUrl()).into(holder1.background);
+            FetchData fetchData=new FetchData();
+            Log.d("link",list.get(position).getImageUrl()+"");
             holder1.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -106,6 +116,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         }
     }
 
+
     @Override
     public int getItemCount() {
         return list.size();
@@ -115,12 +126,14 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         TextView subject,professor,section;
         ConstraintLayout layout;
         Button imgmenubtn;
+        ImageView background;
         public HolderView(@NonNull View itemView){
             super(itemView);
             subject=itemView.findViewById(R.id.subjectText);
             section=itemView.findViewById(R.id.sectionText);
             professor=itemView.findViewById(R.id.professorText);
             layout=itemView.findViewById(R.id.con);
+            background=itemView.findViewById(R.id.bgimg);
             imgmenubtn=itemView.findViewById(R.id.imageButtonmenu);
         }
     }

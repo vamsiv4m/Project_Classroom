@@ -6,17 +6,18 @@ public class Createuserdatapojo {
     String room;
     String subject;
     String class_code;
-
+    String imageUrl;
 
     public Createuserdatapojo() {
     }
 
-    public Createuserdatapojo(String classname, String section, String room, String subject, String class_code) {
+    public Createuserdatapojo(String classname, String section, String room, String subject, String class_code, String imageurl) {
         this.classname = classname;
         this.section = section;
         this.room = room;
         this.subject = subject;
         this.class_code = class_code;
+        this.imageUrl = imageurl;
     }
 
     public String getClassname() {
@@ -57,6 +58,14 @@ public class Createuserdatapojo {
 
     public void setClass_code(String class_code) {
         this.class_code = class_code;
+    }
+
+    public String getImageurl() {
+        return imageUrl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageUrl = imageurl;
     }
 }
 

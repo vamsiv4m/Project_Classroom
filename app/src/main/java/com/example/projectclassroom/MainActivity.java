@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         recyclerView = findViewById(R.id.recycler);
         progressBar.setVisibility(View.VISIBLE);
-        List<FetchData> fetchDataList = new ArrayList<>();
+        List<FetchData> fetchDataList=new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -105,11 +105,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 SharedPreferences sharedPreferences=getSharedPreferences(filename,Context.MODE_PRIVATE);
                 String a=sharedPreferences.getString(user,"");
                 Log.d("a",""+a);
-                ClassAdapter adapter = new ClassAdapter(MainActivity.this, fetchDataList );
+
                 for (DataSnapshot dataSnapshot1 : snapshot.child(a).child("class").getChildren()) {
                         FetchData data = dataSnapshot1.getValue(FetchData.class);
+                        Log.d("d",dataSnapshot1+"");
                         fetchDataList.add(data);
                 }
+
+                ClassAdapter adapter = new ClassAdapter(MainActivity.this, fetchDataList );
                 progressBar.setVisibility(View.GONE);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), RecyclerView.VERTICAL, false));
                 recyclerView.setAdapter(adapter);

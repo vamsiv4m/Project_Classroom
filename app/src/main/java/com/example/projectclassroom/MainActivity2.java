@@ -2,9 +2,14 @@ package com.example.projectclassroom;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -25,6 +30,9 @@ public class MainActivity2 extends AppCompatActivity {
     DatabaseReference myRef;
     ProgressBar progressBar;
     TextInputLayout til1, til2, til3, til4;
+    private String img1="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2FUntitled.jpg?alt=media&token=b41b4de7-1a6a-4921-89d0-027466eab27e";
+    private String img2="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2FDownload%20wallpapers%20in%20zip%20file%20Click%20Here%20or%20mirror.png?alt=media&token=791ebdf6-f32b-49ca-aa21-e967be2b2b0f";
+    private String img3="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2Fbackground.png?alt=media&token=fcc8848e-b7d3-46c9-90f4-1c3eeef60fa1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +119,15 @@ public class MainActivity2 extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    //list
+                    List<String> list = new ArrayList<>();
+                    // add 5 element in ArrayList
+                    list.add(img1);
+                    list.add(img2);
+                    list.add(img3);
+                    Random random=new Random();
+                    Log.d("l",list.get(random.nextInt(list.size()))+"");
+
                     String cn = classname.getText().toString();
                     String sec = section.getText().toString();
                     String r = room.getText().toString();
@@ -118,7 +135,7 @@ public class MainActivity2 extends AppCompatActivity {
                     String class_code = UUID.randomUUID().toString().substring(0, 5);
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("users").child(user);
-                    Createuserdatapojo createuserdatapojo = new Createuserdatapojo(cn, sec, r, sub, class_code);
+                    Createuserdatapojo createuserdatapojo = new Createuserdatapojo(cn, sec, r, sub, class_code, (String)list.get(random.nextInt(list.size())));
                     myRef.child("class").child(class_code).setValue(createuserdatapojo);
                     Toast.makeText(MainActivity2.this, "Class is created", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
