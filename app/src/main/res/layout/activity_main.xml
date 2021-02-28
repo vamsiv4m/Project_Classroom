@@ -1,101 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:id="@+id/conlay"
+    >
 
-    android:id="@+id/drawerLayout">
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </ScrollView>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/include"
+        layout="@layout/app_tool_bar"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/white"
-        app:headerLayout="@layout/main_header"
-        app:menu="@menu/main_menu">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="43dp" />
 
-    </com.google.android.material.navigation.NavigationView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <View
+        android:id="@+id/divider5"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="1dp"
+        android:layout_marginTop="55dp"
+        android:background="#00FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/include" />
 
-        <ImageView
-            android:id="@+id/add"
-            android:layout_width="30dp"
-            android:layout_height="33dp"
-            android:layout_marginTop="16dp"
+    <ProgressBar
+        android:id="@+id/progress"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider5"
+        app:layout_constraintVertical_bias="0.0" />
 
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            android:onClick="click"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            app:srcCompat="@drawable/ic_baseline_add_24"
-            android:contentDescription="TODO" />
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefresh"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider5"
+        tools:ignore="MissingConstraints">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
+            android:id="@+id/recycler"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/divider"
-            app:layout_constraintVertical_bias="0.0" />
+            android:theme="@style/CustomTheme" />
 
-        <Button
-            android:id="@+id/menuicon"
-            android:layout_width="26dp"
-            android:layout_height="23dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:background="@drawable/navigation_menu_bar"
-            android:onClick="menu"
-            app:backgroundTint="#000000"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginLeft="24dp"
-            android:fontFamily="@font/open_sans_semibold"
-            android:text="@string/project_classroom"
-            android:textSize="21sp"
-            app:layout_constraintBottom_toBottomOf="@+id/add"
-            app:layout_constraintStart_toEndOf="@+id/menuicon"
-            app:layout_constraintTop_toTopOf="@+id/add" />
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="8dp"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/add" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

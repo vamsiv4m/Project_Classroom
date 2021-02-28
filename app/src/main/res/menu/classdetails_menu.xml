@@ -3,21 +3,21 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/a"
-
+            android:icon="@drawable/ic_baseline_settings"
             android:title="Settings" />
         <item
             android:id="@+id/b"
-
+            android:icon="@drawable/ic_baseline_feedback_24"
             android:title="Help And Feedback" />
 
         <item
             android:id="@+id/c"
+            android:icon="@drawable/ic_baseline_policy_24"
             android:title="Terms and Privacy" />
 
     </group>
     <group>
         <item android:title="Logout"
-            android:id="@+id/logout"
             />
     </group>
 

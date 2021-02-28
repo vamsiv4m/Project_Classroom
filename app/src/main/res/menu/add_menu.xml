@@ -3,10 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:title="@string/create_classroom"
-        android:onClick="create_classroom"/>
+        android:id="@+id/createclassmenu"
+        />
     <item android:title="@string/join_classroom"
-        android:onClick="joinClassroom"/>
+        android:id="@+id/joinclassroommenu"
+        />
     <item
-        android:checkable="false"
+        android:id="@+id/joinvideoclassmenu"
         android:title="@string/join_videoclass" />
 </menu>

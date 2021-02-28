@@ -3,15 +3,15 @@ package com.example.projectclassroom;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -32,9 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-
-import model.SessionManager;
+import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 
 public class LoginActivity extends AppCompatActivity {
     EditText username;
@@ -42,33 +40,46 @@ public class LoginActivity extends AppCompatActivity {
     String uname, passwd;
     TextInputLayout til1, til2;
     ProgressBar progressBar;
+    SharedPreferences sharedPreferences;
     private int RC_SIGN_IN = 123;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
-
-    public LoginActivity() {
-    }
-
+    private static final String filename = "login";
+    private static final String user="username";
+    private static final String email="email";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        sharedPreferences=getSharedPreferences(filename, Context.MODE_PRIVATE);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
         createRequest();
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        if(sharedPreferences.contains(user)){
+            Intent i=new Intent(this,MainActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+            finish();
+        }
         // Check if user is signed in (non-null) and update UI accordingly.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        else {
+            FirebaseUser currentUser = mAuth.getCurrentUser();
+            updateUI(currentUser);
+        }
     }
-
 
     //validation methods
     private Boolean validationUsername() {
@@ -110,8 +121,10 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.passwd);
         til1 = (TextInputLayout) findViewById(R.id.userInputLayout);
         til2 = (TextInputLayout) findViewById(R.id.passwordInputLayout);
+
         String uname = username.getText().toString();
         String passwd = password.getText().toString();
+
         progressBar = findViewById(R.id.progressBar);
         progressBar.getIndeterminateDrawable().setColorFilter(0xFFcc0000, android.graphics.PorterDuff.Mode.MULTIPLY);
         progressBar.setVisibility(View.VISIBLE);
@@ -124,13 +137,19 @@ public class LoginActivity extends AppCompatActivity {
                     String pass = snapshot.child(uname).child("password").getValue(String.class);
                     if (pass.equals(passwd)) {
                         progressBar.setVisibility(View.GONE);
-                        //get users
                         String fullname = snapshot.child(uname).child("username").getValue(String.class);
-                        String passwd = snapshot.child(uname).child("password").getValue(String.class);
-                        SessionManager sessionManager=new SessionManager(LoginActivity.this);
-                        sessionManager.storeData(fullname);
-                        startActivity(new Intent(getApplicationContext(),MainActivity2.class));
-                        moveTomain();
+                        String emailid = snapshot.child(uname).child("email").getValue(String.class);
+                        Log.d("f",""+fullname);
+                        Log.d("m",""+emailid);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString(user,fullname);
+                        editor.putString(email,emailid);
+                        editor.apply();
+                        Intent i=new Intent(getApplicationContext(),MainActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(i);
+                        finish();
+
                     } else {
                         progressBar.setVisibility(View.GONE);
                         til2.setError("wrong password");
@@ -140,21 +159,14 @@ public class LoginActivity extends AppCompatActivity {
                     til1.setError("No user");
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
 
-    private void moveTomain() {
-
-
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(intent);
-        finish();
-    }
 
     public void createanaccount(View view) {
         Intent i = new Intent(this, CreateaccountActivity.class);
@@ -220,11 +232,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(i);
             finish();
         }
+        else{
+
+        }
     }
-//    public final void close(EditText username,EditText password){
-//        EditText username = (EditText) findViewById(R.id.usernameInput);
-//        EditText password = (EditText)findViewById(R.id.passwd);
-//        username.setText("v");
-//        password.setText("v");
-//    }
+
 }

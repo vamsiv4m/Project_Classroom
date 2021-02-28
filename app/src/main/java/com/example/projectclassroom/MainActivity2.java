@@ -2,17 +2,13 @@ package com.example.projectclassroom;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.HashMap;
 import java.util.UUID;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,7 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import model.Createuserdatapojo;
 import model.SessionManager;
 
@@ -41,7 +36,12 @@ public class MainActivity2 extends AppCompatActivity {
         subject = findViewById(R.id.subject);
         progressBar = (ProgressBar) findViewById(R.id.createclassprogressbar);
         progressBar.setVisibility(View.GONE);
+    }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     public boolean validationclass() {
@@ -70,7 +70,6 @@ public class MainActivity2 extends AppCompatActivity {
 
     public boolean validationroom() {
         til3 = (TextInputLayout) findViewById(R.id.room_til);
-
         if (room.getText().toString().isEmpty()) {
             til3.setError("Field should not be empty");
             return false;
@@ -82,7 +81,6 @@ public class MainActivity2 extends AppCompatActivity {
 
     public boolean validationsubject() {
         til4 = (TextInputLayout) findViewById(R.id.subject_til);
-
         if (subject.getText().toString().isEmpty()) {
             til4.setError("Field should not be empty");
             return false;
@@ -92,12 +90,8 @@ public class MainActivity2 extends AppCompatActivity {
         }
     }
 
-    public void back(View view) {
-        onBackPressed();
-    }
 
     public void create(View view) {
-
         if (!validationclass() | !validationsection() | !validationroom() | !validationsubject()) {
             return;
         } else {
@@ -108,7 +102,7 @@ public class MainActivity2 extends AppCompatActivity {
     private void createclassintofirebase() {
         //store the edittext data into variables...
         SessionManager sessionManager = new SessionManager(this);
-        HashMap<String, String> userdetails = sessionManager.getUserData();
+        HashMap<String, String> userdetails = sessionManager.getUserSession();
         String user = userdetails.get(SessionManager.Username);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         progressBar.findViewById(R.id.createclassprogressbar).setVisibility(View.VISIBLE);
@@ -125,11 +119,9 @@ public class MainActivity2 extends AppCompatActivity {
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("users").child(user);
                     Createuserdatapojo createuserdatapojo = new Createuserdatapojo(cn, sec, r, sub, class_code);
-                    myRef.child(class_code).setValue(createuserdatapojo);
+                    myRef.child("class").child(class_code).setValue(createuserdatapojo);
+                    Toast.makeText(MainActivity2.this, "Class is created", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(i);
-
                 } else {
                     progressBar.setVisibility(View.GONE);
                     Toast.makeText(MainActivity2.this, "Class is not created", Toast.LENGTH_SHORT).show();
@@ -142,5 +134,9 @@ public class MainActivity2 extends AppCompatActivity {
                         Toast.makeText(MainActivity2.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void back(View view) {
+        onBackPressed();
     }
 }
