@@ -1,13 +1,11 @@
 package model;
 
-import android.widget.ImageView;
-
 public class FetchData {
     String subject;
     String section;
     String classname;
     String imageurl;
-
+    String class_code;
     int type;
 
 //    public FetchData(String subject, String section, String classname, String imageUrl) {
@@ -16,6 +14,7 @@ public class FetchData {
 //        this.classname = classname;
 //        this.imageUrl = imageUrl;
 //    }
+
 
     public String getSubject() {
         return subject;
@@ -41,12 +40,20 @@ public class FetchData {
         this.classname = classname;
     }
 
-    public String getImageUrl() {
+    public String getImageurl() {
         return imageurl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImageurl(String imageurl) {
         this.imageurl = imageurl;
+    }
+
+    public String getClass_code() {
+        return class_code;
+    }
+
+    public void setClass_code(String class_code) {
+        this.class_code = class_code;
     }
 
     public int getType() {
@@ -56,5 +63,4 @@ public class FetchData {
     public void setType(int type) {
         this.type = type;
     }
-
 }

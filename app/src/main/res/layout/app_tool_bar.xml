@@ -13,7 +13,8 @@
         android:elevation="3dp"
         android:gravity="center"
         app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:title="Project Classroom"
+        app:title="KoalaBear"
+        app:titleMarginStart="20dp"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
         app:titleTextColor="#3C3C3C" />
 

@@ -3,6 +3,7 @@ package adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -28,6 +29,8 @@ import model.FetchData;
 public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     Context context;
     List<FetchData> list;
+    private static final String codename="classcode";
+    private static final String classcode="code";
 
     public ClassAdapter(Context context, List<FetchData> list) {
         this.context = context;
@@ -72,13 +75,19 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(getItemViewType(position)==0) {
             HolderView holder1=(HolderView) holder;
+            SharedPreferences sharedPreferences=getContext().getSharedPreferences(codename,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putString(classcode,list.get(position).getClass_code());
+            editor.apply();
+            Log.d("cc",""+list.get(position).getClass_code());
             holder1.subject.setText(list.get(position).getSubject());
             holder1.section.setText(list.get(position).getSection());
             holder1.professor.setText(list.get(position).getClassname());
+
            // holder1.bgconstraint.setBackground(list.get(position).getImageurl());
-            Glide.with(context).load(list.get(position).getImageUrl()).into(holder1.background);
+            Glide.with(context).load(list.get(position).getImageurl()).into(holder1.background);
             FetchData fetchData=new FetchData();
-            Log.d("link",list.get(position).getImageUrl()+"");
+            Log.d("link",list.get(position).getImageurl()+"");
             holder1.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -86,6 +95,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("subject", "" + holder1.subject.getText());
                     i.putExtra("section",""+holder1.section.getText());
+                    i.putExtra("imglink",""+list.get(position).getImageurl());
                     context.startActivity(i);
                     Toast.makeText(context, "" + holder1.subject.getText(), Toast.LENGTH_SHORT).show();
                 }
@@ -127,12 +137,15 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         ConstraintLayout layout;
         Button imgmenubtn;
         ImageView background;
+        ImageButton imageButton;
         public HolderView(@NonNull View itemView){
             super(itemView);
             subject=itemView.findViewById(R.id.subjectText);
             section=itemView.findViewById(R.id.sectionText);
             professor=itemView.findViewById(R.id.professorText);
             layout=itemView.findViewById(R.id.con);
+
+
             background=itemView.findViewById(R.id.bgimg);
             imgmenubtn=itemView.findViewById(R.id.imageButtonmenu);
         }

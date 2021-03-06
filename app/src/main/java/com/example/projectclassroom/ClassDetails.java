@@ -1,4 +1,4 @@
-package com.example.projectclassroom;
+ package com.example.projectclassroom;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -11,13 +11,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
 public class ClassDetails extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -47,6 +50,7 @@ public class ClassDetails extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ImageView imageView=findViewById(R.id.imgview);
         setContentView(R.layout.navigation_activity_2);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,6 +62,8 @@ public class ClassDetails extends AppCompatActivity implements NavigationView.On
         Intent intent = getIntent();
         String sub = intent.getStringExtra("subject");
         String sec = intent.getStringExtra("section");
+        String imgurl=intent.getStringExtra("imglink");
+        Log.d("img",imgurl+"");
         textView = findViewById(R.id.sub);
         textView2 = findViewById(R.id.sec);
         textView.setText(sub);

@@ -3,6 +3,7 @@ package com.example.projectclassroom;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,9 +31,13 @@ public class MainActivity2 extends AppCompatActivity {
     DatabaseReference myRef;
     ProgressBar progressBar;
     TextInputLayout til1, til2, til3, til4;
-    private String img1="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2FUntitled.jpg?alt=media&token=b41b4de7-1a6a-4921-89d0-027466eab27e";
-    private String img2="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2FDownload%20wallpapers%20in%20zip%20file%20Click%20Here%20or%20mirror.png?alt=media&token=791ebdf6-f32b-49ca-aa21-e967be2b2b0f";
-    private String img3="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2Fbackground.png?alt=media&token=fcc8848e-b7d3-46c9-90f4-1c3eeef60fa1";
+    private String img1="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2FDownload%20wallpapers%20in%20zip%20file%20Click%20Here%20or%20mirror.png?alt=media&token=791ebdf6-f32b-49ca-aa21-e967be2b2b0f";
+    private String img2="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2FUntitled.jpg?alt=media&token=b41b4de7-1a6a-4921-89d0-027466eab27e";
+    private String img3="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2Fbg.jpg?alt=media&token=0b6797b4-4e3e-4a00-8804-8c95df6c5c16";
+    private String img4="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2Fbgimg.png?alt=media&token=c0622115-b922-4318-9fc9-6dcde86551f2";
+    List<String> list = new ArrayList<>();
+    // add 5 element in ArrayList
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,10 @@ public class MainActivity2 extends AppCompatActivity {
         subject = findViewById(R.id.subject);
         progressBar = (ProgressBar) findViewById(R.id.createclassprogressbar);
         progressBar.setVisibility(View.GONE);
+        list.add(img1);
+        list.add(img2);
+        list.add(img3);
+        list.add(img4);
     }
 
     @Override
@@ -120,22 +129,19 @@ public class MainActivity2 extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     //list
-                    List<String> list = new ArrayList<>();
-                    // add 5 element in ArrayList
-                    list.add(img1);
-                    list.add(img2);
-                    list.add(img3);
-                    Random random=new Random();
-                    Log.d("l",list.get(random.nextInt(list.size()))+"");
 
-                    String cn = classname.getText().toString();
-                    String sec = section.getText().toString();
+                    SecureRandom random=new SecureRandom();
+                    int index=random.nextInt(list.size());
+                    Log.d("l",list.get(index)+"");
+
+                    String cn = classname.getText().toString().substring(0, 1).toUpperCase()+classname.getText().toString().substring(1);
+                    String sec = section.getText().toString().toUpperCase();
                     String r = room.getText().toString();
-                    String sub = subject.getText().toString();
+                    String sub = subject.getText().toString().substring(0, 1).toUpperCase()+subject.getText().toString().substring(1);
                     String class_code = UUID.randomUUID().toString().substring(0, 5);
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("users").child(user);
-                    Createuserdatapojo createuserdatapojo = new Createuserdatapojo(cn, sec, r, sub, class_code, (String)list.get(random.nextInt(list.size())));
+                    Createuserdatapojo createuserdatapojo = new Createuserdatapojo(cn, sec, r, sub, class_code, (String)list.get(index));
                     myRef.child("class").child(class_code).setValue(createuserdatapojo);
                     Toast.makeText(MainActivity2.this, "Class is created", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);

@@ -6,7 +6,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:statusBarColor">#5F4081</item>
+        <item name="android:statusBarColor">#FD703E3E</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 </resources>
