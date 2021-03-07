@@ -124,6 +124,52 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             });
         }
+        else{
+            HolderView holder2=(HolderView) holder;
+            SharedPreferences sharedPreferences=getContext().getSharedPreferences(codename,Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=sharedPreferences.edit();
+            editor.putString(classcode,list.get(position).getClass_code());
+            editor.apply();
+            Log.d("cc",""+list.get(position).getClass_code());
+            holder2.subject.setText(list.get(position).getSubject());
+            holder2.section.setText(list.get(position).getSection());
+            holder2.professor.setText(list.get(position).getClassname());
+            holder2.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, ClassDetails.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("subject", "" + holder2.subject.getText());
+                    i.putExtra("section",""+holder2.section.getText());
+                    i.putExtra("imglink",""+list.get(position).getImageurl());
+                    context.startActivity(i);
+                    Toast.makeText(context, "" + holder2.subject.getText(), Toast.LENGTH_SHORT).show();
+                }
+            });
+//            holder2.imgmenubtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    //creating a popup menu
+//                    PopupMenu popup = new PopupMenu(context, ((HolderView) holder).imgmenubtn);
+//                    //inflating menu from xml resource
+//                    popup.inflate(R.menu.menu_recycler);
+//                    //adding click listener
+//                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                        @Override
+//                        public boolean onMenuItemClick(MenuItem item) {
+//                            switch (item.getItemId()) {
+//                                case R.id.unenroll:
+//                                    //handle menu1 click
+//                                    break;
+//                            }
+//                            return false;
+//                        }
+//                    });
+//                    //displaying the popup
+//                    popup.show();
+//                }
+//            });
+        }
     }
 
 

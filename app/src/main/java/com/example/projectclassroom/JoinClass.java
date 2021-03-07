@@ -22,7 +22,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 
@@ -35,6 +38,10 @@ public class JoinClass extends AppCompatActivity {
     public static final String classname="classname";
     public static final String subject="subject";
     public static final String section="section";
+    private String img3="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2FDownload%20wallpapers%20in%20zip%20file%20Click%20Here%20or%20mirror.png?alt=media&token=791ebdf6-f32b-49ca-aa21-e967be2b2b0f";
+    private String img2="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2FUntitled.jpg?alt=media&token=b41b4de7-1a6a-4921-89d0-027466eab27e";
+    private String img1="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2Fbg.jpg?alt=media&token=0b6797b4-4e3e-4a00-8804-8c95df6c5c16";
+    private String img4="https://firebasestorage.googleapis.com/v0/b/chat-prattle.appspot.com/o/Background_Images%2Fbgimg.png?alt=media&token=c0622115-b922-4318-9fc9-6dcde86551f2";
     FirebaseDatabase database;
     DatabaseReference myref;
     @Override
@@ -72,17 +79,25 @@ public class JoinClass extends AppCompatActivity {
         HashMap<String, String> userdetails = sessionManager.getUserSession();
         String user = userdetails.get(SessionManager.Username);
 
-
+        List<String> list=new ArrayList<>();
+        list.add(img2);
+        list.add(img3);
+        list.add(img4);
+        list.add(img1);
         EditText joinclass=(EditText)findViewById(R.id.editText);
         String text=joinclass.getText().toString();
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
+        SecureRandom secureRandom=new SecureRandom();
+        int index=secureRandom.nextInt(list.size());
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Log.d("d",""+dataSnapshot);
-                    Map<String,Object> code=(Map<String, Object>) dataSnapshot.getValue();
+                    Map<Object,Object> code= (Map<Object, Object>) dataSnapshot.getValue();
+                    String TAG="t";
+                    Log.d(TAG, code+"");
                     if(code.get("class")==null){
                         continue;
                     }
@@ -97,10 +112,10 @@ public class JoinClass extends AppCompatActivity {
                                 Log.d("o",""+o);
                                 Map<String,Object> obj= (Map<String, Object>) o;
                                 Toast.makeText(JoinClass.this, ""+obj.get("subject"), Toast.LENGTH_SHORT).show();
-                                //Createuserdatapojo createuserdatapojo=new Createuserdatapojo((String)obj.get("classname"),(String)obj.get("section"),(String)obj.get("room"),(String)obj.get("subject"),(String)obj.get("class_code"));
+                                Createuserdatapojo createuserdatapojo=new Createuserdatapojo((String)obj.get("classname"),(String)obj.get("section"),(String)obj.get("room"),(String)obj.get("subject"),(String)obj.get("class_code"),list.get(index));
                                 database=FirebaseDatabase.getInstance();
                                 myref=database.getReference("users").child(user);
-                                myref.child("class").child((String)obj.get(subject)).setValue("");
+                                myref.child("class").child((String)obj.get("class_code")).setValue(createuserdatapojo);
                                 try {
                                     Thread.sleep(500);
                                     finish();

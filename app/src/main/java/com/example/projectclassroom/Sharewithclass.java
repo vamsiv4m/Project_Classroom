@@ -84,7 +84,7 @@ public class Sharewithclass extends AppCompatActivity {
                 Log.d("u",url+"");
                 reference=database.getReference("users"); //return the path to root.
                 Log.d("r", reference+"");
-                reference.child(filename).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                reference.child("files").child(filename).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()) {

@@ -1,6 +1,7 @@
 package com.example.projectclassroom;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -47,6 +49,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.BiConsumer;
 
 import adapter.ClassAdapter;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
@@ -116,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                     //retreiving data from firebase using for loop
@@ -124,10 +129,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.d("a",""+a);
 
                 for (DataSnapshot dataSnapshot1 : snapshot.child(a).child("class").getChildren()) {
-                        FetchData data = dataSnapshot1.getValue(FetchData.class);
-                        Log.d("d",dataSnapshot1+"");
-                        fetchDataList.add(data);
+                    FetchData data = dataSnapshot1.getValue(FetchData.class);
+                    Log.d("d", dataSnapshot1.getKey() + "");
+                    fetchDataList.add(data);
                 }
+                for(DataSnapshot dataSnapshot : snapshot.child(a).child("class").child("joinclass").getChildren()){
+                    if(dataSnapshot.getValue()!=null){
+                        FetchData data1 = dataSnapshot.getValue(FetchData.class);
+                        Log.d("data1",dataSnapshot.getValue()+"");
+                        fetchDataList.add(data1);
+                    }
+
+                }
+//                    if (dataSnapshot1.getKey() == "joinclass") {
+//                        Map<String, Object> map = (Map<String, Object>) dataSnapshot1.getValue();
+//                        Log.d("map",map+"");
+//                        map.forEach(new BiConsumer<String, Object>() {
+//
+//                            @Override
+//                            public void accept(String s, Object o) {
+//                            }
+//
+//                            @Override
+//                            public BiConsumer<String, Object> andThen(BiConsumer<? super String, ? super Object> after) {
+//                                return null;
+//                            }
+//                        });
+//                        Log.d("map", map + "");
+//                    }
 
                 progressBar.setVisibility(View.GONE);
                 LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getApplicationContext(),RecyclerView.VERTICAL,false);
