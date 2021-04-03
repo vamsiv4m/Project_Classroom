@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/enroll"
+        android:icon="@drawable/classicon"
+        android:title="  Enrolled"
+        app:cnb_iconColor="#385767" />
+    <item
+        android:id="@+id/teach"
+        android:icon="@drawable/classicon2"
+        android:title="  Teaching"
+
+        app:cnb_iconColor="#514877" />
+</menu>

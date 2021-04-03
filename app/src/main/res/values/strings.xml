@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Project Classroom</string>
-    <string name="todo">TODO</string>
     <string name="hello">TODO</string>
     <string name="project_classroom">Project Classroom</string>
     <string name="create_classroom">Create Classroom</string>
@@ -18,5 +17,10 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="open">open</string>
     <string name="close">close</string>
+    <string name="info">info</string>
+    <string name="this_is_background_img">this is background img</string>
     <string name="textview">TextView</string>
+    <string name="save">Save</string>
+    <string name="class_settings">Class Settings</string>
+    <string name="todo">TODO</string>
 </resources>

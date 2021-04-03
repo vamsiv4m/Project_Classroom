@@ -1,7 +1,8 @@
-package adapter;
+ package adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -16,11 +17,13 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.projectclassroom.ClassDetails;
+import com.example.projectclassroom.MainActivity;
 import com.example.projectclassroom.R;
 
 import java.util.List;
@@ -73,22 +76,22 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @SuppressLint("CheckResult")
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        HolderView holder1 =(HolderView) holder;
+        SharedPreferences sharedPreferences=getContext().getSharedPreferences(codename,Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(classcode,list.get(position).getClass_code());
+        editor.apply();
+        Log.d("cc",""+list.get(position).getClass_code());
+        holder1.subject.setText(list.get(position).getSubject());
+        holder1.section.setText(list.get(position).getSection());
+        holder1.professor.setText(list.get(position).getClassname());
         if(getItemViewType(position)==0) {
-            HolderView holder1=(HolderView) holder;
-            SharedPreferences sharedPreferences=getContext().getSharedPreferences(codename,Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=sharedPreferences.edit();
-            editor.putString(classcode,list.get(position).getClass_code());
-            editor.apply();
-            Log.d("cc",""+list.get(position).getClass_code());
-            holder1.subject.setText(list.get(position).getSubject());
-            holder1.section.setText(list.get(position).getSection());
-            holder1.professor.setText(list.get(position).getClassname());
 
-           // holder1.bgconstraint.setBackground(list.get(position).getImageurl());
+            // holder1.bgconstraint.setBackground(list.get(position).getImageurl());
             Glide.with(context).load(list.get(position).getImageurl()).into(holder1.background);
             FetchData fetchData=new FetchData();
             Log.d("link",list.get(position).getImageurl()+"");
-            holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            holder1.itemView.setOnClickListener(new View.OnClickListener()  {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(context, ClassDetails.class);
@@ -104,6 +107,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 @Override
                 public void onClick(View v) {
                     //creating a popup menu
+
                     PopupMenu popup = new PopupMenu(context, ((HolderView) holder).imgmenubtn);
                     //inflating menu from xml resource
                     popup.inflate(R.menu.menu_recycler);
@@ -114,6 +118,16 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                             switch (item.getItemId()) {
                                 case R.id.unenroll:
                                     //handle menu1 click
+                                    String cc=list.get(position).getClass_code();
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                                    builder.setMessage("Classroom Code is : " + cc)
+                                            .setCancelable(false)
+                                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.cancel();
+                                                }
+                                            }).show();
                                     break;
                             }
                             return false;
@@ -125,53 +139,20 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             });
         }
         else{
-            HolderView holder2=(HolderView) holder;
-            SharedPreferences sharedPreferences=getContext().getSharedPreferences(codename,Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor=sharedPreferences.edit();
-            editor.putString(classcode,list.get(position).getClass_code());
-            editor.apply();
-            Log.d("cc",""+list.get(position).getClass_code());
-            holder2.subject.setText(list.get(position).getSubject());
-            holder2.section.setText(list.get(position).getSection());
-            holder2.professor.setText(list.get(position).getClassname());
-            holder2.itemView.setOnClickListener(new View.OnClickListener() {
+            holder1.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(context, ClassDetails.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    i.putExtra("subject", "" + holder2.subject.getText());
-                    i.putExtra("section",""+holder2.section.getText());
+                    i.putExtra("subject", "" + holder1.subject.getText());
+                    i.putExtra("section",""+ holder1.section.getText());
                     i.putExtra("imglink",""+list.get(position).getImageurl());
                     context.startActivity(i);
-                    Toast.makeText(context, "" + holder2.subject.getText(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "" + holder1.subject.getText(), Toast.LENGTH_SHORT).show();
                 }
             });
-//            holder2.imgmenubtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    //creating a popup menu
-//                    PopupMenu popup = new PopupMenu(context, ((HolderView) holder).imgmenubtn);
-//                    //inflating menu from xml resource
-//                    popup.inflate(R.menu.menu_recycler);
-//                    //adding click listener
-//                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                        @Override
-//                        public boolean onMenuItemClick(MenuItem item) {
-//                            switch (item.getItemId()) {
-//                                case R.id.unenroll:
-//                                    //handle menu1 click
-//                                    break;
-//                            }
-//                            return false;
-//                        }
-//                    });
-//                    //displaying the popup
-//                    popup.show();
-//                }
-//            });
         }
     }
-
 
     @Override
     public int getItemCount() {

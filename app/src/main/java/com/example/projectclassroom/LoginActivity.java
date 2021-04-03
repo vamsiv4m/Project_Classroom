@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -32,11 +33,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import static android.content.Intent.ACTION_MAIN;
+import static android.content.Intent.CATEGORY_HOME;
 import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
 
 public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
+    Button login;
     String uname, passwd;
     TextInputLayout til1, til2;
     ProgressBar progressBar;
@@ -50,35 +54,52 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        sharedPreferences=getSharedPreferences(filename, Context.MODE_PRIVATE);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
         createRequest();
-    }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }
+        sharedPreferences=getSharedPreferences(filename, Context.MODE_PRIVATE);
+        login= (Button) findViewById(R.id.loginBtn);
 
-    @Override
-    protected void onStart() {
-        super.onStart();
         if(sharedPreferences.contains(user)){
             Intent i=new Intent(this,MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
             finish();
         }
-        // Check if user is signed in (non-null) and update UI accordingly.
-        else {
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!validationUsername() | !validationpassword()) {
+                    return;
+                } else {
+                    userlogin();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent exit=new Intent(Intent.ACTION_MAIN);
+        exit.addCategory(Intent.CATEGORY_HOME);
+        exit.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(exit);
+        finish();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+//        // Check if user is signed in (non-null) and update UI accordingly.
             FirebaseUser currentUser = mAuth.getCurrentUser();
             updateUI(currentUser);
-        }
     }
 
     //validation methods
@@ -108,13 +129,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void login(View view) {
-        if (!validationUsername() | !validationpassword()) {
-            return;
-        } else {
-            userlogin();
-        }
-    }
 
     public void userlogin() {
         username = findViewById(R.id.usernameInput);
@@ -146,7 +160,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString(email,emailid);
                         editor.apply();
                         Intent i=new Intent(getApplicationContext(),MainActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(i);
                         finish();
 
@@ -159,6 +173,7 @@ public class LoginActivity extends AppCompatActivity {
                     til1.setError("No user");
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();

@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -20,7 +19,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.google.android.material.navigation.NavigationView;
 
 public class ClassDetails extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -90,7 +88,7 @@ public class ClassDetails extends AppCompatActivity implements NavigationView.On
         Intent i;
         switch (item.getItemId()) {
             case R.id.createclassmenu:
-                i = new Intent(this, MainActivity2.class);
+                i = new Intent(this, CreateClass.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
                 return true;

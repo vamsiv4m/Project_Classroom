@@ -3,12 +3,16 @@ package model;
 public class JoinData {
     String subject;
     String section;
-    String professor;
+    String classname;
+    String imageurl;
+    String class_code;
 
-    public JoinData(String subject, String section, String professor) {
-        this.subject = subject;
-        this.section = section;
-        this.professor = professor;
+    public String getClass_code() {
+        return class_code;
+    }
+
+    public void setClass_code(String class_code) {
+        this.class_code = class_code;
     }
 
     public String getSubject() {
@@ -27,11 +31,19 @@ public class JoinData {
         this.section = section;
     }
 
-    public String getProfessor() {
-        return professor;
+    public String getClassname() {
+        return classname;
     }
 
-    public void setProfessor(String professor) {
-        this.professor = professor;
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
+
+    public void setClassname(String classname) {
+        this.classname = classname;
     }
 }

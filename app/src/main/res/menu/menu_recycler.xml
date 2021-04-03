@@ -3,6 +3,5 @@
 
     <item
         android:id="@+id/unenroll"
-        android:title="unenroll"
-        android:onClick="unenroll"/>
+        android:title="@string/info" />
 </menu>

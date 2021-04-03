@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.BiConsumer;
 
 import model.Createuserdatapojo;
@@ -102,11 +103,10 @@ public class JoinClass extends AppCompatActivity {
                         continue;
                     }
                     Map<String,Object> code1=(Map<String, Object>) code.get("class");
-                    Log.d("c1",""+code);
+                    Log.d("c1",""+code1);
                     code1.forEach(new BiConsumer<String, Object>() {
                         @Override
                         public void accept(String s, Object o) {
-                            String c="class";
                             if(s.equals(text)){
                                 Log.d("s",""+s);
                                 Log.d("o",""+o);
@@ -114,8 +114,9 @@ public class JoinClass extends AppCompatActivity {
                                 Toast.makeText(JoinClass.this, ""+obj.get("subject"), Toast.LENGTH_SHORT).show();
                                 Createuserdatapojo createuserdatapojo=new Createuserdatapojo((String)obj.get("classname"),(String)obj.get("section"),(String)obj.get("room"),(String)obj.get("subject"),(String)obj.get("class_code"),list.get(index));
                                 database=FirebaseDatabase.getInstance();
+                                assert user != null;
                                 myref=database.getReference("users").child(user);
-                                myref.child("class").child((String)obj.get("class_code")).setValue(createuserdatapojo);
+                                myref.child("joinclass").child((String) Objects.requireNonNull(obj.get("class_code"))).setValue(createuserdatapojo);
                                 try {
                                     Thread.sleep(500);
                                     finish();

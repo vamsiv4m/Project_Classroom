@@ -28,39 +28,38 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/imageButtonmenu"
+                android:id="@+id/imgthreedot"
                 android:layout_width="23dp"
                 android:layout_height="21dp"
                 android:layout_marginEnd="16dp"
                 android:background="@drawable/ic_baseline_more_vert_24"
                 android:textColor="#323232"
                 app:backgroundTint="#FFFFFF"
-                app:elevation="5dp"
-                app:layout_constraintBottom_toBottomOf="@+id/subjectText"
+                app:layout_constraintBottom_toBottomOf="@+id/subText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/subjectText" />
+                app:layout_constraintTop_toTopOf="@+id/subText" />
 
             <ImageView
-                android:id="@+id/bgimg"
+                android:id="@+id/backgroundimg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:contentDescription="@string/this_is_background_img"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bg" />
+                app:srcCompat="@drawable/img1" />
 
             <TextView
-                android:id="@+id/subjectText"
+                android:id="@+id/subText"
                 android:layout_width="wrap_content"
                 android:layout_height="38dp"
                 android:layout_marginStart="24dp"
+                android:layout_marginLeft="24dp"
                 android:layout_marginTop="16dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
-                android:text="@string/textview"
+                android:text="TextView"
                 android:textColor="#FFFFFF"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -69,38 +68,39 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/sectionText"
+                android:id="@+id/sec_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/open_sans_bold"
                 android:gravity="center"
-                android:text="@string/textview"
+                android:text="TextView"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintHorizontal_bias="0.06"
-                app:layout_constraintStart_toStartOf="@+id/subjectText"
-                app:layout_constraintTop_toBottomOf="@+id/subjectText"
+                app:layout_constraintStart_toStartOf="@+id/subText"
+                app:layout_constraintTop_toBottomOf="@+id/subText"
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
-                android:id="@+id/professorText"
+                android:id="@+id/prof_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:layout_marginBottom="16dp"
                 android:fontFamily="@font/open_sans_bold"
-                android:text="@string/textview"
+                android:text="TextView"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/imageButtonmenu"
+                app:layout_constraintEnd_toEndOf="@+id/imgthreedot"
                 app:layout_constraintHorizontal_bias="0.85"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/imageButtonmenu"
+                app:layout_constraintTop_toBottomOf="@+id/imgthreedot"
                 app:layout_constraintVertical_bias="1.0" />
 
             <androidx.constraintlayout.widget.Guideline
@@ -109,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintGuide_begin="235dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

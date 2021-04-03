@@ -7,7 +7,6 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import model.Createuserdatapojo;
 import model.SessionManager;
 
-public class MainActivity2 extends AppCompatActivity {
+public class CreateClass extends AppCompatActivity {
     EditText classname, section, room, subject;
     FirebaseDatabase database;
     DatabaseReference myRef;
@@ -138,23 +137,23 @@ public class MainActivity2 extends AppCompatActivity {
                     String sec = section.getText().toString().toUpperCase();
                     String r = room.getText().toString();
                     String sub = subject.getText().toString().substring(0, 1).toUpperCase()+subject.getText().toString().substring(1);
-                    String class_code = UUID.randomUUID().toString().substring(0, 5);
+                    String class_code = UUID.randomUUID().toString().substring(0, 6);
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("users").child(user);
                     Createuserdatapojo createuserdatapojo = new Createuserdatapojo(cn, sec, r, sub, class_code, (String)list.get(index));
                     myRef.child("class").child(class_code).setValue(createuserdatapojo);
-                    Toast.makeText(MainActivity2.this, "Class is created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateClass.this, "Class is created", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 } else {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(MainActivity2.this, "Class is not created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreateClass.this, "Class is not created", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 progressBar.setVisibility(View.GONE);
-                        Toast.makeText(MainActivity2.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateClass.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
