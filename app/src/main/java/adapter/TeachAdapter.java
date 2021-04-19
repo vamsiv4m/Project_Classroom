@@ -14,22 +14,13 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.bumptech.glide.Glide;
-import com.example.projectclassroom.ClassDetails;
+import com.example.projectclassroom.InsideClassDetails;
 import com.example.projectclassroom.R;
-import com.google.android.material.transition.Hold;
-
 import java.util.List;
-import java.util.TreeMap;
-
-import editclass.EditClass;
-import fragments.EnrollFragment;
 import model.JoinData;
 
 public class TeachAdapter extends RecyclerView.Adapter<TeachAdapter.Holderview> {
@@ -39,12 +30,12 @@ public class TeachAdapter extends RecyclerView.Adapter<TeachAdapter.Holderview> 
         this.context = context;
         this.list = list;
     }
+
     private final static String data="data";
     private final static String title="title";
     private final static String subject="subject";
     private final static String section="section";
     private final static String code="code";
-
 
     @NonNull
     @Override
@@ -74,7 +65,7 @@ public class TeachAdapter extends RecyclerView.Adapter<TeachAdapter.Holderview> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), ClassDetails.class);
+                Intent i = new Intent(v.getContext(), InsideClassDetails.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 i.putExtra("classname",""+holder.professor.getText());
                 i.putExtra("subject", "" + holder.subject.getText());
@@ -99,6 +90,7 @@ public class TeachAdapter extends RecyclerView.Adapter<TeachAdapter.Holderview> 
                                 String cc=list.get(position).getClass_code();
                                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                                 builder.setMessage("Classroom Code is : " + cc)
+                                        
                                         .setCancelable(true)
                                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                             @Override

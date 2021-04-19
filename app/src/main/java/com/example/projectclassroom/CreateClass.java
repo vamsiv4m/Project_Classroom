@@ -140,7 +140,7 @@ public class CreateClass extends AppCompatActivity {
                     String class_code = UUID.randomUUID().toString().substring(0, 6);
                     database = FirebaseDatabase.getInstance();
                     myRef = database.getReference("users").child(user);
-                    Createuserdatapojo createuserdatapojo = new Createuserdatapojo(cn, sec, r, sub, class_code, (String)list.get(index));
+                    Createuserdatapojo createuserdatapojo = new Createuserdatapojo(user,cn, sec, r, sub, class_code, (String)list.get(index));
                     myRef.child("class").child(class_code).setValue(createuserdatapojo);
                     Toast.makeText(CreateClass.this, "Class is created", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);

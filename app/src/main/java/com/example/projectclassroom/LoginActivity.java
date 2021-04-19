@@ -33,10 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import static android.content.Intent.ACTION_MAIN;
-import static android.content.Intent.CATEGORY_HOME;
-import static android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP;
-
 public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
@@ -104,8 +100,8 @@ public class LoginActivity extends AppCompatActivity {
 
     //validation methods
     private Boolean validationUsername() {
-        til1 = (TextInputLayout) findViewById(R.id.userInputLayout);
-        username = findViewById(R.id.usernameInput);
+        til1 = (TextInputLayout) findViewById(R.id.sharetxt);
+        username = findViewById(R.id.sharetext);
         uname = username.getEditableText().toString();
         if (uname.isEmpty()) {
             til1.setError("Field cannot empty");
@@ -131,9 +127,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void userlogin() {
-        username = findViewById(R.id.usernameInput);
+        username = findViewById(R.id.sharetext);
         password = findViewById(R.id.passwd);
-        til1 = (TextInputLayout) findViewById(R.id.userInputLayout);
+        til1 = (TextInputLayout) findViewById(R.id.sharetxt);
         til2 = (TextInputLayout) findViewById(R.id.passwordInputLayout);
 
         String uname = username.getText().toString();

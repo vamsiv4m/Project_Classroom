@@ -10,10 +10,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectClassroom">
-        <activity android:name="editclass.EditClass"></activity>
-        <activity android:name="settings.Settings" />
+        <activity android:name="attendence.AttendenceInterface">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity android:name="editclass.EditClass" />
         <activity android:name=".Sharewithclass" />
-        <activity android:name=".ClassDetails" />
+        <activity android:name=".InsideClassDetails" />
         <activity
             android:name=".Splash_Screen"
             android:theme="@style/Theme.Transparent">
@@ -33,10 +39,10 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission
         android:name="android.permission.INTERNET"
         tools:ignore="ManifestOrder" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

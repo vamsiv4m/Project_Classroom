@@ -52,8 +52,7 @@ public class EnrollFragment extends Fragment {
     List<FetchData> fetchDataList=new ArrayList<>();
     private static final String filename="login";
     private static final String user="username";
-    private static final String codename="classname";
-    private static final String classcode = "code";
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,7 +74,6 @@ public class EnrollFragment extends Fragment {
                 for(DataSnapshot dataSnapshot : snapshot.child(a).child("joinclass").getChildren()){
                     if(dataSnapshot!=null){
                         koala.animate().alpha((float) 0).start();
-
                          ConstraintLayout constraintLayout=v.findViewById(R.id.cback);
                          constraintLayout.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         FrameLayout frameLayout=v.findViewById(R.id.enrollframe);
@@ -146,7 +144,7 @@ public class EnrollFragment extends Fragment {
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.cancel();
                                         adapter.notifyItemChanged(position);
-                                        getFragmentManager().beginTransaction().detach(EnrollFragment.this).attach(EnrollFragment.this).commit();
+                                       // getFragmentManager().beginTransaction().detach(EnrollFragment.this).attach(EnrollFragment.this).commit();
                                     }
                                 });
                         AlertDialog alertDialog=builder.create();

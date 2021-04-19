@@ -10,7 +10,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +34,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +41,7 @@ import java.util.Objects;
 import adapter.TeachAdapter;
 import editclass.EditClass;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
+
 import model.JoinData;
 
 public class TeachFragment extends Fragment {
@@ -74,8 +74,10 @@ public class TeachFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences(filename, Context.MODE_PRIVATE);
                 String a = sharedPreferences.getString(user, "");
+
                 for (DataSnapshot dataSnapshot1 : snapshot.child(a).child("class").getChildren()) {
                     if (dataSnapshot1 != null) {
+                        Log.d("datasnapshot1",dataSnapshot1+"");
                         ConstraintLayout layout=v.findViewById(R.id.constbackground);
                         layout.setBackgroundColor(Color.parseColor("#FFFFFF"));
                         imgconstraint.animate().alpha(0).start();
@@ -87,6 +89,7 @@ public class TeachFragment extends Fragment {
                         Log.d("f", joinDataList.get(0).getSection() + "");
                     }
                 }
+
                 noclass.animate().alpha(1).setDuration(1000).start();
                 progressBar.setVisibility(View.GONE);
                 adapter = new TeachAdapter(v.getContext(), joinDataList);
@@ -100,6 +103,7 @@ public class TeachFragment extends Fragment {
                     @Override
                     public void onRefresh() {
                         swipe.setRefreshing(false);
+                        assert getFragmentManager() != null;
                         getFragmentManager().beginTransaction().detach(TeachFragment.this).attach(TeachFragment.this).commit();
                     }
                 });
@@ -107,7 +111,7 @@ public class TeachFragment extends Fragment {
                 itemTouchHelper.attachToRecyclerView(recyclerView);
             }
 
-            ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+            final ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
                 @Override
                 public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                     return false;
@@ -119,7 +123,7 @@ public class TeachFragment extends Fragment {
                     String sub=joinDataList.get(position).getSubject();
                     String sec=joinDataList.get(position).getSection();
                     String code=joinDataList.get(position).getClass_code();
-                    SharedPreferences sharedPreferences=getActivity().getSharedPreferences(filename,Context.MODE_PRIVATE);
+                    SharedPreferences sharedPreferences= Objects.requireNonNull(getActivity()).getSharedPreferences(filename,Context.MODE_PRIVATE);
                     String a=sharedPreferences.getString(user,"");
                     if(direction==ItemTouchHelper.LEFT){
                         Intent i=new Intent(getContext(), EditClass.class);
@@ -138,6 +142,7 @@ public class TeachFragment extends Fragment {
                         }, 500);
                     }
                 }
+
                 @Override
                 public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                     super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);

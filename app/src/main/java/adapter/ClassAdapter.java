@@ -22,8 +22,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.projectclassroom.ClassDetails;
-import com.example.projectclassroom.MainActivity;
+import com.example.projectclassroom.InsideClassDetails;
 import com.example.projectclassroom.R;
 
 import java.util.List;
@@ -94,11 +93,12 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder1.itemView.setOnClickListener(new View.OnClickListener()  {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(context, ClassDetails.class);
+                    Intent i = new Intent(context, InsideClassDetails.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("subject", "" + holder1.subject.getText());
                     i.putExtra("section",""+holder1.section.getText());
                     i.putExtra("imglink",""+list.get(position).getImageurl());
+                    i.putExtra("classcode",""+list.get(position).getClass_code());
                     context.startActivity(i);
                     Toast.makeText(context, "" + holder1.subject.getText(), Toast.LENGTH_SHORT).show();
                 }
@@ -142,7 +142,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             holder1.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(context, ClassDetails.class);
+                    Intent i = new Intent(context, InsideClassDetails.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     i.putExtra("subject", "" + holder1.subject.getText());
                     i.putExtra("section",""+ holder1.section.getText());

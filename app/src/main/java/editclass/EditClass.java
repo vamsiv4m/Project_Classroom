@@ -28,6 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.BiConsumer;
@@ -102,30 +105,42 @@ public class EditClass extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Log.d("d", "" + dataSnapshot);
 
-                    //map helps us to iterate the objects..
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    //ap helps us to iterate the objects..
                     Map<String, Object> code = (Map<String, Object>) dataSnapshot.getValue();
+                    Log.d("datacode", "" + code);
+                    assert code != null;
                     if (code.get("joinclass") == null) {
                         continue;
                     }
-                    code.forEach(new BiConsumer<Object, Object>() {
+                    Map<String, Object> code1 = (Map<String, Object>) code.get("joinclass");
+
+                    code1.forEach(new BiConsumer<Object, Object>() {
                         @Override
                         public void accept(Object o, Object o2) {
-                            // text input data
-                            String classname = textInputLayout1.getEditText().getText().toString().substring(0, 1).toUpperCase()+textInputLayout1.getEditText().getText().toString().substring(1);
-                            String subject = textInputLayout2.getEditText().getText().toString().substring(0, 1).toUpperCase()+textInputLayout2.getEditText().getText().toString().substring(1);
-                            String section = textInputLayout3.getEditText().getText().toString().toUpperCase();
 
-                            // updating the class details in all users like updating classname,subject,section etc...
-                            // the details will update in all users who are joined in that class
-                            //for example if rajesh is joined in a class with code of 123abc. If the creator of the class is updated details of the
-                            //123abc class then rajesh will also updated automatically.
-                            reference1.child((String) code.get("username")).child("joinclass").child(classcode).child("classname").setValue(classname);
-                            reference1.child((String) code.get("username")).child("joinclass").child(classcode).child("subject").setValue(subject);
-                            reference1.child((String) code.get("username")).child("joinclass").child(classcode).child("section").setValue(section);
+                            Log.d("classcode123", o + "");
+                            if(classcode.equals(o)){
+
+                                Log.d("oname",code.get("username")+"");
+                                // text input data
+                                String classname = textInputLayout1.getEditText().getText().toString().substring(0, 1).toUpperCase() + textInputLayout1.getEditText().getText().toString().substring(1);
+                                String subject = textInputLayout2.getEditText().getText().toString().substring(0, 1).toUpperCase() + textInputLayout2.getEditText().getText().toString().substring(1);
+                                String section = textInputLayout3.getEditText().getText().toString().toUpperCase();
+
+
+                                // updating the class details in all users like updating classname,subject,section etc...
+                                // the details will update in all users who are joined in that class
+                                // for example if rajesh is joined in a class with code of 123abc. If the creator of the class is updated details of the
+                                //123abc class then rajesh will also updated automatically.
+                                reference1.child((String) Objects.requireNonNull(code.get("username"))).child("joinclass").child(classcode).child("classname").setValue(classname);
+                                reference1.child((String) Objects.requireNonNull(code.get("username"))).child("joinclass").child(classcode).child("subject").setValue(subject);
+                                reference1.child((String) Objects.requireNonNull(code.get("username"))).child("joinclass").child(classcode).child("section").setValue(section);
+                            }
                         }
+
+
                         @Override
                         public BiConsumer<Object, Object> andThen(BiConsumer<? super Object, ? super Object> after) {
                             return null;
@@ -136,7 +151,7 @@ public class EditClass extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(EditClass.this, error.getMessage()+"", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditClass.this, error.getMessage() + "", Toast.LENGTH_SHORT).show();
             }
         });
     }

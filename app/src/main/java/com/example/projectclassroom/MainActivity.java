@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigation;
     DrawerLayout drawerLayout;
     ProgressBar progressBar;
-    BottomNavigationView bottomNavigationView;
     ChipNavigationBar chipNavigationBar;
     ActionBarDrawerToggle actionBarDrawerToggle;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static final String user = "username";
     private static final String email = "email";
     private static final String codename = "classcode";
-    private static final String classcode = "code";
     List<FetchData> fetchDataList = new ArrayList<>();
     ClassAdapter adapter;
 
@@ -71,8 +69,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String m = sharedPreferences.getString(email, "");
         TextView unameheader = navi.findViewById(R.id.unameheader);
         TextView emailheader = navi.findViewById(R.id.emailheader);
-        unameheader.setText(a);
-        emailheader.setText(m);
+
+            assert unameheader != null;
+            unameheader.setText(a);
+            assert emailheader != null;
+            emailheader.setText(m);
+
     }
 
     @Override
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         adapter = new ClassAdapter(MainActivity.this, fetchDataList);
         //To disable night mode view for our app ...
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-       // bottomNavigationView = findViewById(R.id.bottomnav);
+        // bottomNavigationView = findViewById(R.id.bottomnav);
         //custom tool bar.
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,20 +110,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void bottomnav() {
-        chipNavigationBar=findViewById(R.id.bottomnav);
-        chipNavigationBar.setItemSelected(R.id.enroll,true);
+        chipNavigationBar = findViewById(R.id.bottomnav);
+        chipNavigationBar.setItemSelected(R.id.enroll, true);
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int i) {
-                Fragment fragment=null;
-                switch (i){
+                Fragment fragment = null;
+                switch (i) {
                     case R.id.enroll:
-                        fragment=new EnrollFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,fragment).commit();
+                        fragment = new EnrollFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragment).commit();
                         break;
                     case R.id.teach:
-                        fragment=new TeachFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout,fragment).addToBackStack(null).commit();
+                        fragment = new TeachFragment();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayout, fragment).addToBackStack(null).commit();
                         break;
                 }
             }
@@ -135,20 +137,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         FragmentManager fm = getFragmentManager();
-        if (drawerLayout.isDrawerVisible(GravityCompat.START)){
+        if (drawerLayout.isDrawerVisible(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else {
+        } else {
 
             if (chipNavigationBar.getSelectedItemId() == R.id.enroll) {
-                AlertDialog.Builder builder=new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("Are You Sure to Exit?")
                         .setTitle("Exit").setIcon(R.drawable.ic_baseline_exit_to_app_24)
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                Intent exit=new Intent(Intent.ACTION_MAIN);
+                                Intent exit = new Intent(Intent.ACTION_MAIN);
                                 exit.addCategory(Intent.CATEGORY_HOME);
                                 exit.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(exit);
@@ -160,11 +161,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         dialog.cancel();
                     }
                 });
-                AlertDialog alertDialog=builder.create();
+                AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-            }
-            else {
-                chipNavigationBar.setItemSelected(R.id.enroll,true);
+            } else {
+                chipNavigationBar.setItemSelected(R.id.enroll, true);
             }
         }
     }
