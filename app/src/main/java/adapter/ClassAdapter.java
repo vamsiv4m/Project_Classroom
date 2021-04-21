@@ -84,6 +84,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holder1.subject.setText(list.get(position).getSubject());
         holder1.section.setText(list.get(position).getSection());
         holder1.professor.setText(list.get(position).getClassname());
+
         if(getItemViewType(position)==0) {
 
             // holder1.bgconstraint.setBackground(list.get(position).getImageurl());
@@ -98,7 +99,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     i.putExtra("subject", "" + holder1.subject.getText());
                     i.putExtra("section",""+holder1.section.getText());
                     i.putExtra("imglink",""+list.get(position).getImageurl());
-                    i.putExtra("classcode",""+list.get(position).getClass_code());
+                    i.putExtra("code",""+list.get(position).getClass_code());
                     context.startActivity(i);
                     Toast.makeText(context, "" + holder1.subject.getText(), Toast.LENGTH_SHORT).show();
                 }

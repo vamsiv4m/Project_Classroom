@@ -43,12 +43,12 @@ public class EditClass extends AppCompatActivity {
     TextInputLayout textInputLayout1, textInputLayout2, textInputLayout3;
     private final static String filename = "login";
     private final static String user = "username";
-    private final static String data = "data";
-    private final static String title = "title";
-    private final static String subject = "subject";
-    private final static String section = "section";
-    private final static String code = "code";
-    SharedPreferences sharedPreferences;
+//    private final static String data = "data";
+//    private final static String title = "title";
+//    private final static String subject = "subject";
+//    private final static String section = "section";
+//    private final static String code = "code";
+//    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +91,7 @@ public class EditClass extends AppCompatActivity {
         SharedPreferences sharedata = getSharedPreferences(filename, MODE_PRIVATE);
         String username = sharedata.getString(user, "");
         Intent i = getIntent();
+
         String classcode = i.getStringExtra("code");
         textInputLayout1 = findViewById(R.id.textInputLayout);
         textInputLayout2 = findViewById(R.id.textInputLayout2);
@@ -128,7 +129,6 @@ public class EditClass extends AppCompatActivity {
                                 String classname = textInputLayout1.getEditText().getText().toString().substring(0, 1).toUpperCase() + textInputLayout1.getEditText().getText().toString().substring(1);
                                 String subject = textInputLayout2.getEditText().getText().toString().substring(0, 1).toUpperCase() + textInputLayout2.getEditText().getText().toString().substring(1);
                                 String section = textInputLayout3.getEditText().getText().toString().toUpperCase();
-
 
                                 // updating the class details in all users like updating classname,subject,section etc...
                                 // the details will update in all users who are joined in that class

@@ -69,14 +69,21 @@ public class TeachFragment extends Fragment {
         progressBar.setVisibility(View.VISIBLE);
         swipe=v.findViewById(R.id.swipeTeach);
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        adapter = new TeachAdapter(v.getContext(), joinDataList);
+        recyclerView = v.findViewById(R.id.recyclerview);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences(filename, Context.MODE_PRIVATE);
                 String a = sharedPreferences.getString(user, "");
-
+                joinDataList.clear();
                 for (DataSnapshot dataSnapshot1 : snapshot.child(a).child("class").getChildren()) {
                     if (dataSnapshot1 != null) {
+
                         Log.d("datasnapshot1",dataSnapshot1+"");
                         ConstraintLayout layout=v.findViewById(R.id.constbackground);
                         layout.setBackgroundColor(Color.parseColor("#FFFFFF"));
@@ -90,21 +97,16 @@ public class TeachFragment extends Fragment {
                     }
                 }
 
+                adapter.notifyDataSetChanged();
+
                 noclass.animate().alpha(1).setDuration(1000).start();
                 progressBar.setVisibility(View.GONE);
-                adapter = new TeachAdapter(v.getContext(), joinDataList);
-                recyclerView = v.findViewById(R.id.recyclerview);
-                recyclerView.setHasFixedSize(true);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(linearLayoutManager);
-                recyclerView.setAdapter(adapter);
 
                 swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
                     public void onRefresh() {
                         swipe.setRefreshing(false);
-                        assert getFragmentManager() != null;
-                        getFragmentManager().beginTransaction().detach(TeachFragment.this).attach(TeachFragment.this).commit();
+                        adapter.notifyDataSetChanged();
                     }
                 });
                 ItemTouchHelper itemTouchHelper=new ItemTouchHelper(simpleCallback);

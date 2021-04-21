@@ -5,6 +5,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.app.ProgressDialog;
@@ -37,6 +39,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+import fragments.EnrollFragment;
+import fragments.ShareFilesFragment;
 import model.Sharefilemodel;
 
 public class Sharewithclass extends AppCompatActivity {
@@ -113,6 +117,7 @@ public class Sharewithclass extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(filename, MODE_PRIVATE);
         String users = sharedPreferences.getString(user, "");
         String cc = sharedPreferences.getString(classcode, "");
+        Log.d("classcode", users + "");
         Date date = new Date();
         android.text.format.DateFormat df = new android.text.format.DateFormat();
         Log.d("mydate", df.format("MM dd, yyyy", date) + "");
@@ -129,13 +134,15 @@ public class Sharewithclass extends AppCompatActivity {
                 Log.d("r", reference + "");
                 String rancode = UUID.randomUUID().toString();
                 reference.child("group").child(cc).child("files").child(rancode.substring(0, 13)).child("msg").setValue(s);
-                reference.child("group").child(cc).child("files").child(rancode.substring(0, 13)).child("date").setValue(df.format("MMMM dd, yyyy", date));
+                reference.child("group").child(cc).child("files").child(rancode.substring(0, 13)).child("username").setValue(users);
+                reference.child("group").child(cc).child("files").child(rancode.substring(0, 13)).child("date").setValue(df.format("MMMM dd, yyyy hh:mm", date));
                 reference.child("group").child(cc).child("files").child(rancode.substring(0, 13)).child(filename).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             progressDialog.dismiss();
                             Toast.makeText(Sharewithclass.this, "file successfully uploaded...", Toast.LENGTH_SHORT).show();
+
                         } else
                             Toast.makeText(Sharewithclass.this, "Not uploaded", Toast.LENGTH_SHORT).show();
                     }
@@ -197,4 +204,5 @@ public class Sharewithclass extends AppCompatActivity {
     public void cancel(View view) {
         onBackPressed();
     }
+
 }

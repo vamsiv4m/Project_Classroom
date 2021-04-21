@@ -65,12 +65,21 @@ public class EnrollFragment extends Fragment {
 
         SharedPreferences sharedPreferences=getContext().getSharedPreferences(filename, Context.MODE_PRIVATE);
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        koala.animate().setDuration(800).start();
+        adapter = new ClassAdapter(v.getContext(),fetchDataList);
+        Log.d("join", fetchDataList+"");
+        recyclerView = v.findViewById(R.id.enrollrecycler);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("Range")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 String a=sharedPreferences.getString(user,"");
+                fetchDataList.clear();
                 for(DataSnapshot dataSnapshot : snapshot.child(a).child("joinclass").getChildren()){
                     if(dataSnapshot!=null){
                         koala.animate().alpha((float) 0).start();
@@ -83,17 +92,14 @@ public class EnrollFragment extends Fragment {
                         fetchDataList.add(data);
                     }
                 }
+
+                adapter.notifyDataSetChanged();
+
                 koala.animate().translationY(-300).setDuration(800).start();
                 TextView joinyourfirstclass=v.findViewById(R.id.joinyourfirstclass);
                 joinyourfirstclass.animate().alpha(1).setDuration(2000).start();
                 progressBar.setVisibility(View.GONE);
-                adapter = new ClassAdapter(v.getContext(),fetchDataList);
-                Log.d("join", fetchDataList+"");
-                recyclerView = v.findViewById(R.id.enrollrecycler);
-                recyclerView.setHasFixedSize(true);
-                LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
-                recyclerView.setLayoutManager(linearLayoutManager);
-                recyclerView.setAdapter(adapter);
+
                 int time=500;
                 swipeRefreshLayout=v.findViewById(R.id.swipe);
                 swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -102,8 +108,7 @@ public class EnrollFragment extends Fragment {
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run(){
-                                FragmentTransaction ft=getFragmentManager().beginTransaction().replace(R.id.framelayout,new EnrollFragment());
-                                ft.commit();
+                                adapter.notifyDataSetChanged();
                             }
                         },time);
                         swipeRefreshLayout.setRefreshing(false);
@@ -137,6 +142,9 @@ public class EnrollFragment extends Fragment {
                                         adapter.notifyItemRemoved(position);
                                         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("users");
                                         databaseReference.child(a).child("joinclass").child(deletedClass).removeValue();
+                                        FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction().replace(R.id.framelayout,new EnrollFragment());
+                                        fragmentTransaction.commit();
+
                                     }
                                 })
                                 .setNegativeButton("no", new DialogInterface.OnClickListener() {

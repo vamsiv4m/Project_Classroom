@@ -1,15 +1,25 @@
 package model;
 
 public class Sharefilemodel {
-    String files;
-    String msg;
 
-    public String getFiles() {
-        return files;
+    String date;
+    String msg;
+    String username;
+
+    public String getUsername() {
+        return username;
     }
 
-    public void setFiles(String files) {
-        this.files = files;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getMsg() {

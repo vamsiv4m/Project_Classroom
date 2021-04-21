@@ -72,11 +72,11 @@ public class InsideClassDetails extends AppCompatActivity implements NavigationV
         String sub = intent.getStringExtra("subject");
         String sec = intent.getStringExtra("section");
         String imgurl = intent.getStringExtra("imglink");
-        String cc=intent.getStringExtra("classcode");
+        String cc=intent.getStringExtra("code");
         SharedPreferences.Editor editor=sharedPreferences.edit();
-        editor.putString(classcode,cc).apply();
+        editor.putString(classcode,cc);
+        editor.apply();
         Log.d("img", imgurl + "");
-
         bottomnav();
 
     }
