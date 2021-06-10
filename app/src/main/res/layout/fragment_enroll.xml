@@ -14,30 +14,32 @@
 
         <ImageView
             android:id="@+id/koalaimg"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:layout_marginTop="188dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:src="@drawable/koala"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.45999998" />
 
         <TextView
             android:id="@+id/joinyourfirstclass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:alpha="0"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/carter_one"
             android:gravity="center"
             android:text="Join your first class"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@+id/koalaimg"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/koalaimg"
+            app:layout_constraintHorizontal_bias="0.506"
             app:layout_constraintStart_toStartOf="@+id/koalaimg"
-            app:layout_constraintTop_toTopOf="@+id/koalaimg"
-            app:layout_constraintVertical_bias="0.70" />
+            app:layout_constraintTop_toBottomOf="@+id/koalaimg"
+            app:layout_constraintVertical_bias="0.0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

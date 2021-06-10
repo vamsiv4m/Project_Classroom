@@ -65,7 +65,7 @@ public class EnrollFragment extends Fragment {
 
         SharedPreferences sharedPreferences=getContext().getSharedPreferences(filename, Context.MODE_PRIVATE);
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-        koala.animate().setDuration(800).start();
+
         adapter = new ClassAdapter(v.getContext(),fetchDataList);
         Log.d("join", fetchDataList+"");
         recyclerView = v.findViewById(R.id.enrollrecycler);
@@ -94,10 +94,8 @@ public class EnrollFragment extends Fragment {
                 }
 
                 adapter.notifyDataSetChanged();
-
-                koala.animate().translationY(-300).setDuration(800).start();
                 TextView joinyourfirstclass=v.findViewById(R.id.joinyourfirstclass);
-                joinyourfirstclass.animate().alpha(1).setDuration(2000).start();
+                joinyourfirstclass.animate().alpha(1).setDuration(1000).start();
                 progressBar.setVisibility(View.GONE);
 
                 int time=500;
@@ -119,7 +117,7 @@ public class EnrollFragment extends Fragment {
             }
 
             String deletedClass=null;
-            ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+            final ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
                 @Override
                 public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                     return false;
@@ -142,6 +140,7 @@ public class EnrollFragment extends Fragment {
                                         adapter.notifyItemRemoved(position);
                                         DatabaseReference databaseReference=FirebaseDatabase.getInstance().getReference("users");
                                         databaseReference.child(a).child("joinclass").child(deletedClass).removeValue();
+                                        assert getFragmentManager() != null;
                                         FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction().replace(R.id.framelayout,new EnrollFragment());
                                         fragmentTransaction.commit();
 

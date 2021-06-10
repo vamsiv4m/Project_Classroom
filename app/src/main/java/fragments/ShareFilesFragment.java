@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.projectclassroom.R;
 import com.example.projectclassroom.Sharewithclass;
@@ -30,6 +31,9 @@ import model.Sharefilemodel;
 public class ShareFilesFragment extends Fragment {
     private static final String filename = "login";
     private static final String classcode = "code";
+    private static final String subject = "sub";
+    private static final String section = "sec";
+    TextView sub,sec;
     RecyclerView recycler;
     public ShareFilesFragment() {
         // Required empty public constructor
@@ -42,9 +46,16 @@ public class ShareFilesFragment extends Fragment {
         // Inflate the layout for this fragment
         List<Sharefilemodel> list=new ArrayList<>();
         View v= inflater.inflate(R.layout.fragment_share_files, container, false);
+        sub=v.findViewById(R.id.sub);
+        sec=v.findViewById(R.id.sec);
 
         SharedPreferences sharedPreferences=getContext().getSharedPreferences(filename,0);
         String cc =sharedPreferences.getString(classcode,"");
+        String su =sharedPreferences.getString(subject,"");
+        String se =sharedPreferences.getString(section,"");
+        sub.setText(su);
+        sec.setText(se);
+
         SharefilesAdapter sharefilesAdapter=new SharefilesAdapter(v.getContext(),list);
 
         recycler=v.findViewById(R.id.sharerecycler);

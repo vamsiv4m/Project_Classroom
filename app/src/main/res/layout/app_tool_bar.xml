@@ -12,8 +12,9 @@
         android:background="@drawable/tool_bar_style"
         android:elevation="3dp"
         android:gravity="center"
-        app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Small"
         app:title="KoalaBear"
+        app:titleMarginBottom="5dp"
         app:titleMarginStart="20dp"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"
         app:titleTextColor="#3C3C3C" />

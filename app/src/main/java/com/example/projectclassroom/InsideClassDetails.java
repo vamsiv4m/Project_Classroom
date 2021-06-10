@@ -37,6 +37,9 @@ public class InsideClassDetails extends AppCompatActivity implements NavigationV
     private static final String user = "username";
     private static final String email = "email";
     private static final String classcode="code";
+    private static final String subject="sub";
+    private static final String section="sec";
+    private static final String profname="prof";
 
     @Override
     protected void onStart() {
@@ -71,9 +74,14 @@ public class InsideClassDetails extends AppCompatActivity implements NavigationV
         Intent intent = getIntent();
         String sub = intent.getStringExtra("subject");
         String sec = intent.getStringExtra("section");
+        String prof = intent.getStringExtra("profname");
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(section,sec);
+        editor.putString(subject,sub);
+        editor.putString(profname,prof);
+        editor.apply();
         String imgurl = intent.getStringExtra("imglink");
         String cc=intent.getStringExtra("code");
-        SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString(classcode,cc);
         editor.apply();
         Log.d("img", imgurl + "");
@@ -96,6 +104,8 @@ public class InsideClassDetails extends AppCompatActivity implements NavigationV
                     case R.id.chat:
                         fragment = new ChatFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.framelayoutinsideclass, fragment).addToBackStack(null).commit();
+                        chipNavigationBar.setVisibility(View.GONE);
+                        toolbar.setTitle("Chatroom");
                         break;
                 }
             }
@@ -169,6 +179,8 @@ public class InsideClassDetails extends AppCompatActivity implements NavigationV
             if (chipNavigationBar.getSelectedItemId()==R.id.files) {
                 finish();
             } else {
+                toolbar.setTitle("KoalaBear");
+                chipNavigationBar.setVisibility(View.VISIBLE);
                 chipNavigationBar.setItemSelected(R.id.files, true);
             }
         }

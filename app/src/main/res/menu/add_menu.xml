@@ -8,7 +8,4 @@
     <item android:title="@string/join_classroom"
         android:id="@+id/joinclassroommenu"
         />
-    <item
-        android:id="@+id/joinvideoclassmenu"
-        android:title="@string/join_videoclass" />
 </menu>

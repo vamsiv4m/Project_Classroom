@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,12 +65,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if(viewType==0){
             return new HolderView(LayoutInflater.from(parent.getContext()).inflate(R.layout.classeslayout,parent,false));
-
-        }else{
-            return new HolderView2(LayoutInflater.from(parent.getContext()).inflate(R.layout.joinclass_recycler_layout,parent,false));
-        }
     }
 
     @SuppressLint("CheckResult")
@@ -91,11 +87,12 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Glide.with(context).load(list.get(position).getImageurl()).into(holder1.background);
             FetchData fetchData=new FetchData();
             Log.d("link",list.get(position).getImageurl()+"");
-            holder1.itemView.setOnClickListener(new View.OnClickListener()  {
+            holder1.cardView.setOnClickListener(new View.OnClickListener()  {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(context, InsideClassDetails.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    i.putExtra("profname",""+holder1.professor.getText());
                     i.putExtra("subject", "" + holder1.subject.getText());
                     i.putExtra("section",""+holder1.section.getText());
                     i.putExtra("imglink",""+list.get(position).getImageurl());
@@ -140,7 +137,7 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             });
         }
         else{
-            holder1.itemView.setOnClickListener(new View.OnClickListener() {
+            holder1.cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(context, InsideClassDetails.class);
@@ -162,31 +159,17 @@ public class ClassAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     static class HolderView extends RecyclerView.ViewHolder{
         TextView subject,professor,section;
-        ConstraintLayout layout;
+        CardView cardView;
         Button imgmenubtn;
         ImageView background;
-        ImageButton imageButton;
         public HolderView(@NonNull View itemView){
             super(itemView);
             subject=itemView.findViewById(R.id.subjectText);
             section=itemView.findViewById(R.id.sectionText);
             professor=itemView.findViewById(R.id.professorText);
-            layout=itemView.findViewById(R.id.con);
-
-
+            cardView=itemView.findViewById(R.id.classcardview);
             background=itemView.findViewById(R.id.bgimg);
             imgmenubtn=itemView.findViewById(R.id.imageButtonmenu);
-        }
-    }
-    static class HolderView2 extends RecyclerView.ViewHolder{
-        TextView subject,professor,section;
-        ConstraintLayout layout;
-        public HolderView2(@NonNull View itemView) {
-            super(itemView);
-            subject=itemView.findViewById(R.id.subtext);
-            section=itemView.findViewById(R.id.profText);
-            professor=itemView.findViewById(R.id.secText);
-            layout=itemView.findViewById(R.id.constraint);
         }
     }
 }
