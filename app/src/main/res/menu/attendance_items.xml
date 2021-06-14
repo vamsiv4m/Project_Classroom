@@ -3,5 +3,6 @@
 
     <item
         android:id="@+id/changedate"
-        android:title="Change Date" />
+        android:title="Change Date"
+        />
 </menu>

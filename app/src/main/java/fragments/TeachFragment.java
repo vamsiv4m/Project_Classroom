@@ -1,48 +1,24 @@
 package fragments;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Canvas;
-import android.graphics.Color;
+import android.content.*;
+import android.graphics.*;
 import android.os.Bundle;
-
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.*;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.view.*;
+import android.widget.*;
 import com.example.projectclassroom.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
+import com.google.firebase.database.*;
+import java.util.*;
 import adapter.TeachAdapter;
 import attendence.AttendenceInterface;
 import editclass.EditClass;
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
-
 import model.JoinData;
 
 public class TeachFragment extends Fragment {
@@ -57,8 +33,7 @@ public class TeachFragment extends Fragment {
     TextView noclass;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         joinDataList = new ArrayList<>();
         View v = inflater.inflate(R.layout.fragment_teach, container, false);
@@ -102,13 +77,11 @@ public class TeachFragment extends Fragment {
                 noclass.animate().alpha(1).setDuration(1000).start();
                 progressBar.setVisibility(View.GONE);
 
-                swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        swipe.setRefreshing(false);
-                        adapter.notifyDataSetChanged();
-                    }
+                swipe.setOnRefreshListener(() -> {
+                    swipe.setRefreshing(false);
+                    adapter.notifyDataSetChanged();
                 });
+
                 ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
                 itemTouchHelper.attachToRecyclerView(recyclerView);
             }
@@ -126,7 +99,6 @@ public class TeachFragment extends Fragment {
                     String sub = joinDataList.get(position).getSubject();
                     String sec = joinDataList.get(position).getSection();
                     String code = joinDataList.get(position).getClass_code();
-                    SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(filename, Context.MODE_PRIVATE);
                     switch (direction) {
                         case ItemTouchHelper.LEFT:
                             Intent i = new Intent(getContext(), EditClass.class);
@@ -136,12 +108,10 @@ public class TeachFragment extends Fragment {
                             i.putExtra("code", code);
                             startActivity(i);
                             final Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    adapter.notifyItemChanged(position);
-                                    getFragmentManager().beginTransaction().detach(TeachFragment.this).attach(TeachFragment.this).commit();
-                                }
+                            handler.postDelayed(() -> {
+                                adapter.notifyItemChanged(position);
+                                assert getFragmentManager() != null;
+                                getFragmentManager().beginTransaction().detach(TeachFragment.this).attach(TeachFragment.this).commit();
                             }, 500);
                             break;
                         case ItemTouchHelper.RIGHT:
