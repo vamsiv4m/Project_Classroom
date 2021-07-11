@@ -57,10 +57,11 @@ public class ShareFilesFragment extends Fragment {
         sec.setText(se);
 
         SharefilesAdapter sharefilesAdapter=new SharefilesAdapter(v.getContext(),list);
-
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,true);
+        linearLayoutManager.setStackFromEnd(true);
         recycler=v.findViewById(R.id.sharerecycler);
         recycler.setHasFixedSize(true);
-        recycler.setLayoutManager(new LinearLayoutManager(v.getContext()));
+        recycler.setLayoutManager(linearLayoutManager);
         recycler.setAdapter(sharefilesAdapter);
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
         reference.addValueEventListener(new ValueEventListener() {

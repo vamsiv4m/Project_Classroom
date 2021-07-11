@@ -6,9 +6,15 @@
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/sharefileclick"
         android:layout_width="match_parent"
-        android:layout_height="85dp"
-        android:layout_margin="15dp"
+        android:layout_height="115dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="#EAEAEA"
+        android:foreground="?attr/selectableItemBackground"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,20 +27,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <ImageView
+                android:id="@+id/imageView6"
+                android:layout_width="34dp"
+                android:layout_height="34dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.486"
+                app:srcCompat="@drawable/book" />
+
             <TextView
                 android:id="@+id/sharemsg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="16dp"
                 android:text="New Material :"
                 android:textAlignment="textStart"
                 android:textColor="#515151"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView6"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
@@ -44,6 +61,7 @@
                 android:layout_marginTop="4dp"
                 android:text="Apr 20, 2021"
                 android:textSize="10sp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView6"
                 app:layout_constraintStart_toStartOf="@+id/sharemsg"
                 app:layout_constraintTop_toBottomOf="@+id/sharemsg" />
 
@@ -53,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="8dp"
+                android:fontFamily="@font/open_sans_semibold"
                 android:text="By vamsi"
                 android:textColor="#535353"
                 android:textSize="10sp"

@@ -71,10 +71,8 @@ public class TeachFragment extends Fragment {
                         Log.d("f", joinDataList.get(0).getSection() + "");
                     }
                 }
-
                 adapter.notifyDataSetChanged();
-
-                noclass.animate().alpha(1).setDuration(1000).start();
+                noclass.animate().alpha(1).setDuration(400).start();
                 progressBar.setVisibility(View.GONE);
 
                 swipe.setOnRefreshListener(() -> {
@@ -120,7 +118,12 @@ public class TeachFragment extends Fragment {
                             intent.putExtra("sec", sec);
                             intent.putExtra("sub", sub);
                             startActivity(intent);
-                            adapter.notifyItemChanged(position);
+                            final Handler handler1=new Handler();
+                            handler1.postDelayed(() -> {
+                                adapter.notifyItemChanged(position);
+                                assert getFragmentManager() != null;
+                                getFragmentManager().beginTransaction().detach(TeachFragment.this).attach(TeachFragment.this).commit();
+                            }, 500);
                             break;
                     }
                 }

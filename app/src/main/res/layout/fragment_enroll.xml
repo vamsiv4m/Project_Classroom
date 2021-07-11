@@ -22,14 +22,15 @@
             app:layout_constraintHorizontal_bias="0.491"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.45999998" />
+            app:layout_constraintVertical_bias="0.35000002" />
 
         <TextView
             android:id="@+id/joinyourfirstclass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
+            android:alpha="0"
             android:fontFamily="@font/carter_one"
             android:gravity="center"
             android:text="Join your first class"

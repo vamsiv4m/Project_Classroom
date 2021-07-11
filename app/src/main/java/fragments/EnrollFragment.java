@@ -46,6 +46,7 @@ import model.FetchData;
 public class EnrollFragment extends Fragment {
     RecyclerView recyclerView;
     ProgressBar progressBar;
+    TextView joinclass;
     ImageView koala;
     ClassAdapter adapter;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -65,7 +66,8 @@ public class EnrollFragment extends Fragment {
 
         SharedPreferences sharedPreferences=getContext().getSharedPreferences(filename, Context.MODE_PRIVATE);
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("users");
-
+        joinclass=v.findViewById(R.id.joinyourfirstclass);
+        joinclass.setAlpha(0);
         adapter = new ClassAdapter(v.getContext(),fetchDataList);
         Log.d("join", fetchDataList+"");
         recyclerView = v.findViewById(R.id.enrollrecycler);
@@ -91,14 +93,15 @@ public class EnrollFragment extends Fragment {
                         Log.d("d", dataSnapshot.getKey() + "");
                         fetchDataList.add(data);
                     }
+                    else{
+                        joinclass.animate().alpha(1).setDuration(500).start();
+                    }
                 }
 
                 adapter.notifyDataSetChanged();
-                TextView joinyourfirstclass=v.findViewById(R.id.joinyourfirstclass);
-                joinyourfirstclass.animate().alpha(1).setDuration(1000).start();
+                joinclass.animate().alpha(1).setDuration(500).start();
                 progressBar.setVisibility(View.GONE);
 
-                int time=500;
                 swipeRefreshLayout=v.findViewById(R.id.swipe);
                 swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -108,7 +111,7 @@ public class EnrollFragment extends Fragment {
                             public void run(){
                                 adapter.notifyDataSetChanged();
                             }
-                        },time);
+                        },500);
                         swipeRefreshLayout.setRefreshing(false);
                     }
                 });

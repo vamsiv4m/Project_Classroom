@@ -43,4 +43,10 @@ public class MyCalender extends DialogFragment {
     public String getDate(){
         return DateFormat.format("dd-MM-yyyy",calendar).toString();
     }
+    public String getMonth(){
+        return DateFormat.format("MM-yyyy",calendar).toString();
+    }
+    public String getYear(){
+        return DateFormat.format("yyyy",calendar).toString();
+    }
 }

@@ -10,13 +10,16 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -28,12 +31,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,9 +48,9 @@ import model.Sharefilemodel;
 
 public class Sharewithclass extends AppCompatActivity {
     DatabaseReference reference;
-    FirebaseStorage storage;
     FirebaseDatabase database;
     Button attachments, share;
+
     StorageReference storageReference;
     private static final String filename = "login";
     private static final String user = "username";
@@ -59,7 +62,7 @@ public class Sharewithclass extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sharewithclass);
-        storage = FirebaseStorage.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference("Uploads");
         database = FirebaseDatabase.getInstance();
 
         attachments = findViewById(R.id.attachments);
@@ -86,6 +89,7 @@ public class Sharewithclass extends AppCompatActivity {
                         return;
                     } else {
                         Log.d("sharetext", s + "");
+
                         uploadFile(uri, s);
                     }
 
@@ -113,38 +117,39 @@ public class Sharewithclass extends AppCompatActivity {
         progressDialog.setTitle("Uploading file");
         progressDialog.setProgress(0);
         progressDialog.show();
-
         SharedPreferences sharedPreferences = getSharedPreferences(filename, MODE_PRIVATE);
         String users = sharedPreferences.getString(user, "");
         String cc = sharedPreferences.getString(classcode, "");
         Log.d("classcode", users + "");
-        Date date = new Date();
-        android.text.format.DateFormat df = new android.text.format.DateFormat();
-        Log.d("mydate", df.format("MM dd, yyyy", date) + "");
-
         String filename = System.currentTimeMillis() + "";
-
-        storageReference = storage.getReference();
-        storageReference.child("Uploads").child(filename).putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        String fileExtension=getFileExtension(uri);
+        storageReference.child(filename+"."+fileExtension).putFile(uri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                String url = taskSnapshot.getUploadSessionUri().toString();
-                Log.d("u", url + "");
                 reference = database.getReference("users"); //return the path to root.
-                Log.d("r", reference + "");
-                String rancode = UUID.randomUUID().toString();
-                reference.child("group").child(cc).child("files").child(rancode.substring(0, 13)).child("msg").setValue(s);
-                reference.child("group").child(cc).child("files").child(rancode.substring(0, 13)).child("username").setValue(users);
-                reference.child("group").child(cc).child("files").child(rancode.substring(0, 13)).child("date").setValue(df.format("MMMM dd, yyyy hh:mm", date));
-                reference.child("group").child(cc).child("files").child(rancode.substring(0, 13)).child(filename).setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                Task<Uri> result= taskSnapshot.getMetadata().getReference().getDownloadUrl();
+                result.addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            progressDialog.dismiss();
-                            Toast.makeText(Sharewithclass.this, "file successfully uploaded...", Toast.LENGTH_SHORT).show();
+                    public void onSuccess(Uri uri) {
+                        String url=uri.toString();
+                        Log.d("url12334",getFileExtension(uri)+"");
+                        Log.d("r", reference + "");
+                        reference.child("group").child(cc).child("files").child(filename).child("msg").setValue(s);
+                        reference.child("group").child(cc).child("files").child(filename).child("username").setValue(users);
+                        reference.child("group").child(cc).child("files").child(filename).child("date").setValue(ServerValue.TIMESTAMP);
+                        reference.child("group").child(cc).child("files").child(filename).child("extension").setValue(fileExtension);
+                        reference.child("group").child(cc).child("files").child(filename).child("url").setValue(url).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    progressDialog.dismiss();
+                                    Toast.makeText(Sharewithclass.this, "file successfully uploaded...", Toast.LENGTH_SHORT).show();
 
-                        } else
-                            Toast.makeText(Sharewithclass.this, "Not uploaded", Toast.LENGTH_SHORT).show();
+                                } else
+                                    Toast.makeText(Sharewithclass.this, "Not uploaded", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 });
             }
@@ -163,6 +168,12 @@ public class Sharewithclass extends AppCompatActivity {
             }
         });
 
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver contentResolver=getContentResolver();
+        MimeTypeMap mimeTypeMap=MimeTypeMap.getSingleton();
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
     }
 
     @Override

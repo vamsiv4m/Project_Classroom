@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.projectclassroom.R;
@@ -43,11 +44,11 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.My
         holder.student_name.setText(list.get(position).getStudent_name());
         holder.sno.setText(list.get(position).getSno());
         holder.statusid.setText(list.get(position).getStatus());
-        if(list.get(position).getStatus().equals("P")) holder.cardView.setCardBackgroundColor(Color.parseColor("#4037FF00"));
+        if(list.get(position).getStatus().equals("P")) holder.cardView.setBackgroundColor(Color.parseColor("#4037FF00"));
 
-        else if(list.get(position).getStatus().equals("A")) holder.cardView.setCardBackgroundColor(Color.parseColor("#40FF0000"));
+        else if(list.get(position).getStatus().equals("A")) holder.cardView.setBackgroundColor(Color.parseColor("#40FF0000"));
 
-        else holder.cardView.setCardBackgroundColor(Color.parseColor("#ffffff"));
+        else holder.cardView.setBackgroundColor(Color.parseColor("#ffffff"));
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,13 +62,13 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.My
                 if ((list.get(position).getStatus()).equals("P")) {
                     //If the status is in p when we click then it changes to A.
                     list.get(position).setStatus("A");
-                    holder.cardView.setCardBackgroundColor(Color.parseColor("#40FF0000"));
+                    holder.cardView.setBackgroundColor(Color.parseColor("#40FF0000"));
                     Log.d("statusabs", list.get(position).getStatus() + "");
                 }
 
                 else {
                     list.get(position).setStatus("P");
-                    holder.cardView.setCardBackgroundColor(Color.parseColor("#4037FF00"));
+                    holder.cardView.setBackgroundColor(Color.parseColor("#4037FF00"));
                     Log.d("statuspre", list.get(position).getStatus() + "");
                 }
             }
@@ -80,11 +81,11 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.My
     }
 
     public static class MyHolder extends RecyclerView.ViewHolder {
-        CardView cardView;
+        ConstraintLayout cardView;
         TextView student_name, statusid,sno;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.attendance_cardview);
+            cardView = itemView.findViewById(R.id.cardbackground);
             student_name = itemView.findViewById(R.id.student_name);
             statusid = itemView.findViewById(R.id.statusid);
             sno = itemView.findViewById(R.id.sno);

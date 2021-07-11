@@ -49,8 +49,8 @@
                 android:id="@+id/imgview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/img3" />
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/backimg" />
 
             <TextView
                 android:id="@+id/sec"

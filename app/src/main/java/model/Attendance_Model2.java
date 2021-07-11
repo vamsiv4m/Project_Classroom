@@ -6,14 +6,17 @@ public class Attendance_Model2 {
     String status;
     String section;
     String subjectname;
+    String date;
+    String monthyear;
 
-
-    public Attendance_Model2(String sno, String studentname, String status, String section, String subjectname) {
+    public Attendance_Model2(String sno, String studentname, String status, String section, String subjectname, String date, String monthyear) {
         this.sno = sno;
         this.studentname = studentname;
         this.status = status;
         this.section = section;
         this.subjectname = subjectname;
+        this.date = date;
+        this.monthyear = monthyear;
     }
 
     public String getSno() {
@@ -54,5 +57,21 @@ public class Attendance_Model2 {
 
     public void setSubjectname(String subjectname) {
         this.subjectname = subjectname;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getMonthyear() {
+        return monthyear;
+    }
+
+    public void setMonthyear(String monthyear) {
+        this.monthyear = monthyear;
     }
 }

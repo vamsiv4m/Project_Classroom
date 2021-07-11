@@ -2,7 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/changedate"
-        android:title="Change Date"
+        android:id="@+id/viewdetails"
+        android:title="View Details"
+        />
+    <item
+        android:id="@+id/attendancesheet"
+        android:title="Attendance Sheet"
         />
 </menu>

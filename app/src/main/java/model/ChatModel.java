@@ -1,7 +1,7 @@
 package model;
 
 public class ChatModel {
-    String time;
+    String timesender;
     String msg;
     String username;
 
@@ -13,12 +13,12 @@ public class ChatModel {
         this.username = username;
     }
 
-    public String getTime() {
-        return time;
+    public String getTimesender() {
+        return timesender;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setTimesender(String timesender) {
+        this.timesender = timesender;
     }
 
     public String getMsg() {

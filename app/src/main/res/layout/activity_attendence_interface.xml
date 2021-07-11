@@ -43,13 +43,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="8dp"
-        android:backgroundTint="#1E9E1A"
+        android:backgroundTint="#63E35F"
         android:paddingRight="20dp"
         android:text="save"
+        android:textColor="#43533E"
         android:textSize="12sp"
         app:cornerRadius="5dp"
         app:icon="@drawable/save"
         app:iconSize="18dp"
+        app:iconTint="#4B5947"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -82,4 +84,5 @@
         app:layout_constraintBottom_toBottomOf="@+id/save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/save" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

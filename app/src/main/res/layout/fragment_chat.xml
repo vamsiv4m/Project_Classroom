@@ -7,26 +7,10 @@
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="280dp"
-        android:layout_height="300dp"
+        android:layout_width="250dp"
+        android:layout_height="280dp"
         android:layout_gravity="center"
         android:src="@drawable/koalaworking" />
-
-    <TextView
-        android:id="@+id/welcomemsg2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/textbg2"
-        android:paddingStart="8dp"
-        android:paddingTop="5dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="5dp"
-        android:text="classname's Classroom"
-        android:textAlignment="center"
-        android:textColor="#333333"
-        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/welcomemsg"
@@ -47,31 +31,38 @@
         android:layout_height="match_parent"
         android:layout_gravity="bottom">
 
+        <TextView
+            android:id="@+id/welcomemsg2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/textbg2"
+            android:paddingStart="8dp"
+            android:paddingTop="5dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="5dp"
+            android:text="classname's Classroom"
+            android:textAlignment="center"
+            android:textColor="#333333"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/msground"
-            android:elevation="2dp"
-            android:padding="3dp"
+            android:elevation="1dp"
+            android:padding="2dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
-
-            <Button
-                android:id="@+id/send"
-                android:layout_width="65dp"
-                android:layout_height="45dp"
-                android:layout_marginEnd="4dp"
-                android:background="#00FFFFFF"
-                app:icon="@drawable/sendtxt"
-                app:iconSize="45dp"
-                app:iconTint="#6F6DA1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/sendmessage"
@@ -80,17 +71,27 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="8dp"
                 android:backgroundTint="#00FFFFFF"
-                android:ems="10"
                 android:fontFamily="@font/open_sans_semibold"
                 android:hint="Send Message"
-                android:inputType="textPersonName"
-                android:padding="10dp"
+                android:inputType="textMultiLine|textPersonName"
                 android:textColor="#515151"
-                android:textSize="18sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/send"
+                app:layout_constraintEnd_toStartOf="@+id/sendmsg"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/sendmsg"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="4dp"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/CustomTheme"
+                app:srcCompat="@drawable/sendtxt" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -105,9 +106,8 @@
             android:id="@+id/chatrecycler"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="4dp"
             android:layout_marginBottom="8dp"
-            android:theme="@style/Theme.Transparent"
+            android:theme="@style/CustomTheme"
             app:layout_constraintBottom_toTopOf="@+id/constraintLayout4"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
