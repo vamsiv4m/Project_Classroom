@@ -44,9 +44,15 @@ public class MyCalender extends DialogFragment {
         return DateFormat.format("dd-MM-yyyy",calendar).toString();
     }
     public String getMonth(){
-        return DateFormat.format("MM-yyyy",calendar).toString();
+        return DateFormat.format("MM-yyy",calendar).toString();
     }
     public String getYear(){
         return DateFormat.format("yyyy",calendar).toString();
+    }
+    public int getLastDate(){
+        return calendar.getActualMaximum(Calendar.DATE);
+    }
+    public long getTimeinMilli(){
+        return calendar.getTimeInMillis();
     }
 }

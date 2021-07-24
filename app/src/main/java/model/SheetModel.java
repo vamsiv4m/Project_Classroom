@@ -1,17 +1,19 @@
 package model;
 
 public class SheetModel {
-    String roll;
 
-    public SheetModel(String roll) {
-        this.roll = roll;
+    String sno;
+
+    public SheetModel(String sno) {
+        this.sno = sno;
     }
 
-    public String getRoll() {
-        return roll;
+    public String getSno() {
+        return sno;
     }
 
-    public void setRoll(String roll) {
-        this.roll = roll;
+    public void setSno(String sno) {
+        this.sno = sno;
     }
+
 }

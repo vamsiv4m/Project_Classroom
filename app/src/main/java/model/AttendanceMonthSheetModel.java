@@ -4,12 +4,21 @@ public class AttendanceMonthSheetModel {
     String monthyear;
     String classcode;
     String date;
+    String lastdate;
 
-
-    public AttendanceMonthSheetModel(String monthyear, String classcode) {
+    public AttendanceMonthSheetModel(String monthyear, String classcode, String lastdate) {
+        date="";
         this.monthyear = monthyear;
         this.classcode = classcode;
-        date="";
+        this.lastdate = lastdate;
+    }
+
+    public String getLastdate() {
+        return lastdate;
+    }
+
+    public void setLastdate(String lastdate) {
+        this.lastdate = lastdate;
     }
 
     public String getMonthyear() {

@@ -39,7 +39,6 @@ import model.AttendanceMonthSheetModel;
 public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.MyHolder> {
     Context context;
     List<AttendanceMonthSheetModel> list;
-    List<String> list2=new ArrayList<String>();
     Intent i;
 
     public ListViewAdapter(Context context, List<AttendanceMonthSheetModel> list) {
@@ -57,6 +56,7 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.MyHold
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         Log.d("textview123", list.get(position).getMonthyear() + "");
         String classcode = list.get(position).getClasscode();
+        String lastdate = list.get(position).getLastdate();
         if (list.get(position).getMonthyear() != null) {
             holder.textView.setText(list.get(position).getMonthyear());
         }
@@ -66,11 +66,11 @@ public class ListViewAdapter extends RecyclerView.Adapter<ListViewAdapter.MyHold
             public void onClick(View v) {
                 i = new Intent(context, Sheet.class);
                 i.putExtra("classcode", classcode + "");
+                i.putExtra("lastdate", lastdate + "");
                 i.putExtra("monthyear", list.get(position).getMonthyear());
                 context.startActivity(i);
             }
         });
-
     }
 
     @Override

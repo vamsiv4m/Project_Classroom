@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.*;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.*;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -27,7 +29,9 @@ import java.util.*;
 
 import adapter.AttendanceAdapter;
 import database.SqliteHelperClass;
+import fragments.EnrollFragment;
 import fragments.MyCalender;
+import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator;
 import model.Attendance_Model2;
 import model.Attendance_model;
 
@@ -120,7 +124,34 @@ public class AttendenceInterface extends AppCompatActivity {
                 Log.d("snapshot123", snapshot + "");
                 save.setOnClickListener(v -> savedata());
                 viewdata.setOnClickListener(v -> showCalender());
+                ItemTouchHelper itemTouchHelper=new ItemTouchHelper(simpleCallback);
+                itemTouchHelper.attachToRecyclerView(recyclerView);
             }
+            final ItemTouchHelper.SimpleCallback simpleCallback=new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+                @Override
+                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                    return false;
+                }
+
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                    int position=viewHolder.getAdapterPosition();
+                    if(direction==ItemTouchHelper.LEFT){
+                        Intent i=new Intent(getApplicationContext(),Attendance_Sheet.class);
+                        i.putExtra("classcode",classcode);
+                        startActivity(i);
+                        attendanceAdapter.notifyItemChanged(position);
+                    }
+                }
+                @Override
+                public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                    new RecyclerViewSwipeDecorator.Builder(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                            .addSwipeLeftLabel("More Details")
+                            .create()
+                            .decorate();
+                }
+            };
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -128,7 +159,6 @@ public class AttendenceInterface extends AppCompatActivity {
             }
         });
     }
-
 
     private void savedata() {
         Intent i = getIntent();
@@ -141,18 +171,16 @@ public class AttendenceInterface extends AppCompatActivity {
             section = i.getStringExtra("sec");
             subjectname = i.getStringExtra("sub");
             status = attendance_model.getStatus();
-            attendance_model2 = new Attendance_Model2(sno, name, status, section, subjectname,myCalender.getDate(),myCalender.getMonth());
+            attendance_model2 = new Attendance_Model2(sno, name, status, section, subjectname,myCalender.getDate(),myCalender.getMonth(), myCalender.getLastDate());
             if (!status.equals("P")) status = "A";
             reference = FirebaseDatabase.getInstance().getReference("Attendance");
-            reference.child(classcode).child(myCalender.getMonth()).child(myCalender.getDate()).child(sno).setValue(attendance_model2);
+            reference.child(classcode).child(myCalender.getMonth()).child(name).child(myCalender.getDate()).setValue(attendance_model2);
             Log.d("statusdata123", name + " " + status + " " + myCalender.getDate());
         }
     }
-
     @SuppressLint({"SetTextI18n", "WrongViewCast"})
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
         totalpresent = findViewById(R.id.totalpresent);
         if (item.getItemId() == android.R.id.home) {
             finish();
@@ -178,10 +206,6 @@ public class AttendenceInterface extends AppCompatActivity {
             });
             AlertDialog dialog1 = builder.create();
             dialog1.show();
-        } else if (item.getItemId() == R.id.attendancesheet) {
-            Intent i=new Intent(this,Attendance_Sheet.class);
-            i.putExtra("classcode",classcode);
-            startActivity(i);
         }
         return true;
     }
@@ -209,9 +233,9 @@ public class AttendenceInterface extends AppCompatActivity {
                 String fstatus;
                 for (Attendance_model attendance_model : list) {
 
-                    fstatus = (String) snapshot.child(classcode).child(myCalender.getMonth()).child(myCalender.getDate()).child(attendance_model.getSno()).child("status").getValue();
+                    fstatus = (String) snapshot.child(classcode).child(myCalender.getMonth()).child(attendance_model.getStudent_name()).child(myCalender.getDate()).child("status").getValue();
                     Log.d("datasnapshot123456", fstatus + "");
-                    stucount = (int) snapshot.child(classcode).child(myCalender.getMonth()).child(myCalender.getDate()).getChildrenCount();
+                    stucount = (int) snapshot.child(classcode).child(myCalender.getMonth()).getChildrenCount();
                     if (fstatus == null) { }
                     else if (fstatus.equals("P")) {
                         presentcount += 1;

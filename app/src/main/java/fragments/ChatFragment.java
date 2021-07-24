@@ -25,6 +25,7 @@ import android.widget.Toolbar;
 import com.example.projectclassroom.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -55,12 +56,11 @@ public class ChatFragment extends Fragment {
     private static final String user = "username";
     private static final String classcode = "code";
     private static final String profname = "prof";
-    Toolbar toolbar;
     RecyclerView recyclerView;
     ArrayList<ChatModel> list = new ArrayList<>();
 
     public ChatFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -77,18 +77,14 @@ public class ChatFragment extends Fragment {
         EditText textmsg = v.findViewById(R.id.sendmessage);
 
         String cc = sharedPreferences.getString(classcode, "");
-
         send.setOnClickListener(v1 -> {
-            String time=System.currentTimeMillis()+"";
             String randomString=FirebaseDatabase.getInstance().getReference().push().getKey();
             @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("hh:mm a");
             df.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata")); //format in given timezone
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
             String msgtext = textmsg.getEditableText().toString();
             if (!msgtext.isEmpty()) {
                 Log.d("timestamp123", "file" + "");
                 DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
-
                 reference.child("group").child(cc).child("chat").child(randomString).child("msg").setValue(msgtext);
                 reference.child("group").child(cc).child("chat").child(randomString).child("username").setValue(users);
                 reference.child("group").child(cc).child("chat").child(randomString).child("time").setValue(ServerValue.TIMESTAMP);
@@ -96,7 +92,7 @@ public class ChatFragment extends Fragment {
             }
         });
 
-//        Recycler view
+//      Recycler view
         recyclerView = v.findViewById(R.id.chatrecycler);
         ChatAdapter chatAdapter = new ChatAdapter(list, getContext());
         recyclerView.setHasFixedSize(true);
@@ -107,7 +103,6 @@ public class ChatFragment extends Fragment {
         TextView welmsg=v.findViewById(R.id.welcomemsg);
         TextView welmsg2=v.findViewById(R.id.welcomemsg2);
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference("users");
-
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("SetTextI18n")
             @Override

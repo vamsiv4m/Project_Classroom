@@ -57,13 +57,13 @@ public class DocumentViewer extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         imageView=findViewById(R.id.imgfile);
         String imageurl=i.getStringExtra("myimageurl");
+        String url = i.getStringExtra("myurl");
         if (imageurl!=null){
-
             imageView.setVisibility(View.VISIBLE);
             progressBar.setVisibility(View.GONE);
             Glide.with(getApplicationContext()).load(imageurl).into(imageView);
-        }else {
-            String url = i.getStringExtra("myurl");
+        }
+        if(url!=null){
             webView = findViewById(R.id.webview);
             WebSettings webSettings = webView.getSettings();
             webSettings.setJavaScriptEnabled(true);
@@ -76,22 +76,22 @@ public class DocumentViewer extends AppCompatActivity {
             webSettings.setSaveFormData(true);
             webSettings.setEnableSmoothTransition(true);
             try {
-                finalurl = "https://drive.google.com/viewerng/viewer?embeded=true&url=" + URLEncoder.encode(url, "ISO-8859-1");
+                finalurl = "https://drive.google.com/viewerng/viewer?embeded=true&url=" + URLEncoder.encode(url, "UTF-8");
+                webView.setWebChromeClient(new WebChromeClient() {
+                    @Override
+                    public void onProgressChanged(WebView view, int newProgress) {
+                        super.onProgressChanged(view, newProgress);
+                        if (newProgress == 100) {
+                            progressBar.setVisibility(View.GONE);
+                            webView.loadUrl(url);
+                        }
+                    }
+                });
+                webView.loadUrl(finalurl);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            webView.loadUrl(finalurl);
-            webView.setWebChromeClient(new WebChromeClient() {
-                @Override
-                public void onProgressChanged(WebView view, int newProgress) {
-                    super.onProgressChanged(view, newProgress);
-                    if (newProgress == 100) {
-                        progressBar.setVisibility(View.GONE);
-                    }
-                }
-            });
         }
-
     }
 
     @Override

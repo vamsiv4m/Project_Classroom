@@ -2,6 +2,7 @@ package adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,6 +27,9 @@ import model.Attendance_model;
 public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.MyHolder> {
     Context context;
     public List<Attendance_model> list;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private static final String filename = "login";
 
     public AttendanceAdapter(Context context, List<Attendance_model> list) {
         this.context = context;
@@ -41,6 +45,10 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.My
     @SuppressLint("Range")
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
+        sharedPreferences=context.getSharedPreferences(filename,context.MODE_PRIVATE);
+        editor=sharedPreferences.edit();
+        editor.putString("name",list.get(position).getStudent_name());
+        editor.apply();
         holder.student_name.setText(list.get(position).getStudent_name());
         holder.sno.setText(list.get(position).getSno());
         holder.statusid.setText(list.get(position).getStatus());
@@ -55,6 +63,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.My
             public void onClick(View v) {
                 changestatus(position);
                 holder.statusid.setText(list.get(position).getStatus());
+                list.get(position).getStudent_name();
             }
 
             private void changestatus(int position) {

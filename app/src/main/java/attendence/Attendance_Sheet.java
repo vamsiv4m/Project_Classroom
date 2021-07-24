@@ -43,6 +43,7 @@ public class Attendance_Sheet extends AppCompatActivity {
         recyclerView = findViewById(R.id.listview);
         Intent i = getIntent();
         String classcode = i.getStringExtra("classcode");
+        String lastdate = i.getStringExtra("lastdate");
         ListViewAdapter adapter = new ListViewAdapter(this, list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -53,22 +54,12 @@ public class Attendance_Sheet extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                    Log.d("map123", map + "");
-                    assert map != null;
-                    map.forEach(new BiConsumer<String, Object>() {
-                        @Override
-                        public void accept(String s, Object o) {
-                            Log.d("foreach123", s + "");
-                            AttendanceMonthSheetModel attendanceMonthSheetModel=new AttendanceMonthSheetModel(s,classcode);
-                            list.add(attendanceMonthSheetModel);
-
-
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
-                    Log.d("orderdata", dataSnapshot + "");
+                for (DataSnapshot dataSnapshot : snapshot.child(classcode).getChildren()) {
+                    Log.d("datachild",dataSnapshot.getKey()+"");
+                    String s=dataSnapshot.getKey();
+                    AttendanceMonthSheetModel attendanceMonthSheetModel=new AttendanceMonthSheetModel(s,classcode,lastdate);
+                    list.add(attendanceMonthSheetModel);
+                    Log.d("orderdata12334455", dataSnapshot + "");
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -77,6 +68,5 @@ public class Attendance_Sheet extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), error.getMessage() + "", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 }

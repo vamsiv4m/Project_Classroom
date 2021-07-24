@@ -8,8 +8,9 @@ public class Attendance_Model2 {
     String subjectname;
     String date;
     String monthyear;
+    long lastdate;
 
-    public Attendance_Model2(String sno, String studentname, String status, String section, String subjectname, String date, String monthyear) {
+    public Attendance_Model2(String sno, String studentname, String status, String section, String subjectname, String date, String monthyear, long lastdate) {
         this.sno = sno;
         this.studentname = studentname;
         this.status = status;
@@ -17,6 +18,15 @@ public class Attendance_Model2 {
         this.subjectname = subjectname;
         this.date = date;
         this.monthyear = monthyear;
+        this.lastdate = lastdate;
+    }
+
+    public long getLastdate() {
+        return lastdate;
+    }
+
+    public void setLastdate(int lastdate) {
+        this.lastdate = lastdate;
     }
 
     public String getSno() {
