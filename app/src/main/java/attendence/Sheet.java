@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import com.example.projectclassroom.R;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +36,7 @@ public class Sheet extends AppCompatActivity {
     LinkedHashSet<Long> linkedHashSet1;
     LinkedHashSet<String> linkedHashSet2;
     LinkedHashSet<String> linkedHashSet3;
+    ScrollView scrollView;
     ArrayList<Long> arrayList1;
     ArrayList<String> arrayList2;
     ArrayList<String> arrayList3;
@@ -54,6 +56,8 @@ public class Sheet extends AppCompatActivity {
     }
 
     public void map() {
+        scrollView=findViewById(R.id.scrollview);
+        scrollView.setVerticalScrollBarEnabled(false);
         TextView dateloop=findViewById(R.id.datesloop);
         TextView presentloop=findViewById(R.id.presentloop);
         sharedPreferences=getSharedPreferences(filename,0);
@@ -98,11 +102,15 @@ public class Sheet extends AppCompatActivity {
                         Log.d("mylist",list4+"");
 
                         for (int i=0;i<snapshot.getChildrenCount();i++){
-                            text = text+"  "+arrayList2.get(i).substring(0,2)+"   ";
-                            text1 = text1+"    "+list4.get(i)+"   ";
+                            text = text+""+arrayList2.get(i)+"\n";
+                            if(list4.get(i).equals("P")){
+                                text1 = text1+""+list4.get(i)+"resent\n";
+                            }
+                            else if(list4.get(i).equals("A")){
+                                text1=text1+""+list4.get(i)+"bsent\n";
+                            }
                         }
                         dateloop.setText(text);
-                        presentloop.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         presentloop.setText(text1);
                         Log.d("presentloop",text+"");
                         attendancename=findViewById(R.id.attendancename);
