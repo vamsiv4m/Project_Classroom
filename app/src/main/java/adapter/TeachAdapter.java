@@ -1,12 +1,10 @@
 package adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -14,13 +12,18 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.bumptech.glide.Glide;
 import com.example.projectclassroom.InsideClassDetails;
 import com.example.projectclassroom.R;
+
 import java.util.List;
+
 import model.JoinData;
 
 public class TeachAdapter extends RecyclerView.Adapter<TeachAdapter.Holderview> {
@@ -35,13 +38,11 @@ public class TeachAdapter extends RecyclerView.Adapter<TeachAdapter.Holderview> 
     private final static String title="title";
     private final static String subject="subject";
     private final static String section="section";
-    private final static String code="code";
 
     @NonNull
     @Override
     public Holderview onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Holderview holderview=new Holderview(LayoutInflater.from(parent.getContext()).inflate(R.layout.teachlayout,parent,false));
-        return holderview;
+        return new Holderview(LayoutInflater.from(parent.getContext()).inflate(R.layout.teachlayout, parent, false));
     }
 
     @Override
@@ -62,49 +63,32 @@ public class TeachAdapter extends RecyclerView.Adapter<TeachAdapter.Holderview> 
         editor.putString(subject,sub);
         editor.putString(code,code);
         editor.apply();
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), InsideClassDetails.class);
-                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                i.putExtra("classname",""+holder.professor.getText());
-                i.putExtra("subject", "" + holder.subject.getText());
-                i.putExtra("section",""+holder.section.getText());
-                i.putExtra("imglink",""+list.get(position).getImageurl());
-                i.putExtra("code",""+list.get(position).getClass_code());
-                v.getContext().startActivity(i);
-                Toast.makeText(v.getContext(), "" + holder.subject.getText(), Toast.LENGTH_SHORT).show();
-            }
+        holder.cardView.setOnClickListener(v -> {
+            Intent i = new Intent(v.getContext(), InsideClassDetails.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("profname",""+holder.professor.getText());
+            i.putExtra("subject", "" + holder.subject.getText());
+            i.putExtra("section",""+holder.section.getText());
+            i.putExtra("imglink",""+list.get(position).getImageurl());
+            i.putExtra("code",""+list.get(position).getClass_code());
+            v.getContext().startActivity(i);
+            Toast.makeText(v.getContext(), "" + holder.subject.getText(), Toast.LENGTH_SHORT).show();
         });
 
-        holder.threedots.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popupMenu=new PopupMenu(context ,((Holderview)holder).threedots);
-                popupMenu.inflate(R.menu.menu_recycler );
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId()){
-                            case R.id.unenroll:
-                                String cc=list.get(position).getClass_code();
-                                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                                builder.setMessage("Classroom Code is : " + cc)
-                                        
-                                        .setCancelable(true)
-                                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.cancel();
-                                            }
-                                        }).show();
-                                break;
-                        }
-                        return false;
-                    }
-                });
-                popupMenu.show();
-            }
+        holder.threedots.setOnClickListener((View.OnClickListener) v -> {
+            PopupMenu popupMenu=new PopupMenu(context ,((Holderview)holder).threedots);
+            popupMenu.inflate(R.menu.menu_recycler );
+            popupMenu.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.unenroll) {
+                    String cc = list.get(position).getClass_code();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+                    builder.setMessage("Classroom Code is : " + cc)
+                            .setCancelable(true)
+                            .setPositiveButton("Ok", (dialog, which) -> dialog.cancel()).show();
+                }
+                return false;
+            });
+            popupMenu.show();
         });
         Log.d("s",list.get(position).getSubject()+"");
     }
@@ -114,12 +98,14 @@ public class TeachAdapter extends RecyclerView.Adapter<TeachAdapter.Holderview> 
         return list.size();
     }
 
-    class Holderview extends RecyclerView.ViewHolder {
+    static class Holderview extends RecyclerView.ViewHolder {
         TextView subject,section,professor;
         ImageView background;
+        CardView cardView;
         Button threedots;
         public Holderview(@NonNull View itemView) {
             super(itemView);
+            cardView=itemView.findViewById(R.id.cardviewbackground);
             subject=itemView.findViewById(R.id.subText);
             section=itemView.findViewById(R.id.sec_text);
             professor=itemView.findViewById(R.id.prof_text);

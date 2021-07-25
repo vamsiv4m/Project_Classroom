@@ -70,9 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView unameheader = navi.findViewById(R.id.unameheader);
         TextView emailheader = navi.findViewById(R.id.emailheader);
 
-            assert unameheader != null;
             unameheader.setText(a);
-            assert emailheader != null;
             emailheader.setText(m);
 
     }

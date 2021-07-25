@@ -18,13 +18,13 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/open_sans_semibold"
             android:gravity="center|left"
+            android:onClick="share"
             android:paddingStart="20dp"
             android:text="Share with your class"
             android:textAllCaps="false"
-            android:onClick="share"
             android:textColor="#707070"
             android:textSize="12sp"
-            app:backgroundTint="#FFFFFF"
+            app:backgroundTint="#FBFAFF"
             app:cornerRadius="15dp"
             app:elevation="5dp"
             app:layout_constraintEnd_toEndOf="@+id/cardView"
@@ -37,7 +37,7 @@
             android:layout_width="0dp"
             android:layout_height="150dp"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             app:cardCornerRadius="15dp"
             app:cardElevation="3dp"
@@ -49,8 +49,8 @@
                 android:id="@+id/imgview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                app:srcCompat="@drawable/img3" />
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/backimg" />
 
             <TextView
                 android:id="@+id/sec"

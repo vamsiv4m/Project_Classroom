@@ -104,6 +104,7 @@ public class JoinClass extends AppCompatActivity {
                     }
                     Map<String,Object> code1=(Map<String, Object>) code.get("class");
                     Log.d("c1",""+code1);
+                    assert code1 != null;
                     code1.forEach(new BiConsumer<String, Object>() {
                         @Override
                         public void accept(String s, Object o) {
