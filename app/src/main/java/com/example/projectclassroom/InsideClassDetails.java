@@ -7,7 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,18 +17,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.google.android.material.navigation.NavigationView;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
-
 import fragments.ChatFragment;
 import fragments.ShareFilesFragment;
 
 public class InsideClassDetails extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    TextView textView, textView2;
     Toolbar toolbar;
     DrawerLayout drawerLayout;
     NavigationView navigation;
@@ -58,7 +53,6 @@ public class InsideClassDetails extends AppCompatActivity implements NavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ImageView imageView = findViewById(R.id.imgview);
         setContentView(R.layout.activity_class_details);
         SharedPreferences sharedPreferences = getSharedPreferences(filename, Context.MODE_PRIVATE);
         toolbar = findViewById(R.id.toolbar);
@@ -68,9 +62,7 @@ public class InsideClassDetails extends AppCompatActivity implements NavigationV
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         navigationDrawer();
-
         getSupportFragmentManager().beginTransaction().replace(R.id.framelayoutinsideclass, new ShareFilesFragment()).commit();
-
         Intent intent = getIntent();
         String sub = intent.getStringExtra("subject");
         String sec = intent.getStringExtra("section");
@@ -86,28 +78,25 @@ public class InsideClassDetails extends AppCompatActivity implements NavigationV
         editor.apply();
         Log.d("img", imgurl + "");
         bottomnav();
-
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void bottomnav() {
         ChipNavigationBar chipNavigationBar = findViewById(R.id.chipNavigationBar);
         chipNavigationBar.setItemSelected(R.id.files, true);
-        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int i) {
-                Fragment fragment = null;
-                switch (i) {
-                    case R.id.files:
-                        fragment = new ShareFilesFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayoutinsideclass, fragment).commit();
-                        break;
-                    case R.id.chat:
-                        fragment = new ChatFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.framelayoutinsideclass, fragment).addToBackStack(null).commit();
-                        chipNavigationBar.setVisibility(View.GONE);
-                        toolbar.setTitle("Chatroom");
-                        break;
-                }
+        chipNavigationBar.setOnItemSelectedListener(i -> {
+            Fragment fragment;
+            switch (i) {
+                case R.id.files:
+                    fragment = new ShareFilesFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.framelayoutinsideclass, fragment).commit();
+                    break;
+                case R.id.chat:
+                    fragment = new ChatFragment();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.framelayoutinsideclass, fragment).addToBackStack(null).commit();
+                    chipNavigationBar.setVisibility(View.GONE);
+                    toolbar.setTitle("Chatroom");
+                    break;
             }
         });
     }
@@ -126,6 +115,7 @@ public class InsideClassDetails extends AppCompatActivity implements NavigationV
         navigation.setNavigationItemSelectedListener(this);
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent i;

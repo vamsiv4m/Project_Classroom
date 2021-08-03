@@ -13,7 +13,7 @@
         android:elevation="3dp"
         android:gravity="center"
         app:subtitleTextAppearance="@style/TextAppearance.AppCompat.Small"
-        app:title="KoalaBear"
+        app:title="StudyRoom"
         app:titleMarginBottom="5dp"
         app:titleMarginStart="20dp"
         app:titleTextAppearance="@style/TextAppearance.AppCompat.Large"

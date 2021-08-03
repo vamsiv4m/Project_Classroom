@@ -147,9 +147,6 @@ public class CreateaccountActivity extends AppCompatActivity {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                     DatabaseReference myRef = database.getReference("users");
                     myRef.child(username).setValue(userdetailspojo);
-//                    String a="null",b="",c="",d="",e="";
-//                    Createuserdatapojo createuserdatapojo=new Createuserdatapojo(a,b,c,d,e);
-//                    myRef.child(username).child("class").child("default").setValue(createuserdatapojo);
                     progressBar.setVisibility(View.GONE);
                     Intent i=new Intent(getApplicationContext(),LoginActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

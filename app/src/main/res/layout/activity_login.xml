@@ -26,7 +26,7 @@
             android:id="@+id/loginBtn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="6dp"
             android:layout_weight="1"
             android:fontFamily="@font/open_sans_semibold"
@@ -36,23 +36,21 @@
             app:layout_constraintBottom_toTopOf="@+id/createanaccount"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout"
-            app:layout_constraintVertical_bias="0.95" />
+            app:layout_constraintTop_toBottomOf="@+id/forgotpassword" />
 
         <Button
             android:id="@+id/signInwithgoogle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:drawableLeft="@drawable/googleicon"
             android:drawingCacheQuality="auto"
+            android:onClick="signInwithGoogle"
             android:text="Sign In with Google"
             android:textColor="#090909"
-            android:onClick="signInwithGoogle"
+            android:visibility="gone"
             app:backgroundTint="#FFFFFF"
-            app:layout_constraintEnd_toEndOf="@+id/createanaccount"
-            app:layout_constraintStart_toStartOf="@+id/createanaccount"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -60,19 +58,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/loginBtn"
-            app:layout_constraintStart_toStartOf="@+id/loginBtn"
-            app:layout_constraintTop_toBottomOf="@+id/signInwithgoogle"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="or"
             app:layout_constraintEnd_toEndOf="@+id/createanaccount"
             app:layout_constraintStart_toStartOf="@+id/createanaccount"
             app:layout_constraintTop_toBottomOf="@+id/createanaccount" />
@@ -138,6 +123,20 @@
                 android:textSize="14sp"
                 app:textInputLayoutFocusedRectEnabled="false" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/forgotpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/open_sans_semibold"
+            android:text="Forgot Password"
+            android:onClick="forgot"
+            app:layout_constraintEnd_toEndOf="@+id/passwordInputLayout"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/passwordInputLayout"
+            app:layout_constraintTop_toBottomOf="@+id/passwordInputLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

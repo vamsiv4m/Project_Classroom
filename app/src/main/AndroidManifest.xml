@@ -3,26 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.projectclassroom"
     tools:ignore="ExtraText">
-    android:hardwareAccelerated="true"
+
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:ignore="ManifestOrder" />
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        tools:ignore="ManifestOrder" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ProjectClassroom">
-        <activity android:name="sharefiles.DocumentViewer"></activity>
+        android:theme="@style/Theme.ProjectClassroom"
+        tools:ignore="AllowBackup">
+        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name="sharefiles.DocumentViewer" />
         <activity android:name="attendence.Sheet" />
         <activity android:name="attendence.Attendance_Sheet" />
-        <activity android:name="attendence.AttendenceInterface">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
-        </activity>
+        <activity android:name="attendence.AttendenceInterface"></activity>
         <activity android:name="editclass.EditClass" />
         <activity android:name=".Sharewithclass" />
         <activity android:name=".InsideClassDetails" />
@@ -45,12 +46,5 @@
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
     </application>
-
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        tools:ignore="ManifestOrder" />
-
-    <uses-permission
-        android:name="android.permission.INTERNET"
-        tools:ignore="ManifestOrder" />
 
 </manifest>

@@ -69,9 +69,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         String m = sharedPreferences.getString(email, "");
         TextView unameheader = navi.findViewById(R.id.unameheader);
         TextView emailheader = navi.findViewById(R.id.emailheader);
-
-            unameheader.setText(a);
-            emailheader.setText(m);
+        unameheader.setText(a);
+        emailheader.setText(m);
 
     }
 

@@ -131,10 +131,8 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.passwd);
         til1 = (TextInputLayout) findViewById(R.id.sharetxt);
         til2 = (TextInputLayout) findViewById(R.id.passwordInputLayout);
-
         String uname = username.getText().toString();
         String passwd = password.getText().toString();
-
         progressBar = findViewById(R.id.progressBar);
         progressBar.getIndeterminateDrawable().setColorFilter(0xFFcc0000, android.graphics.PorterDuff.Mode.MULTIPLY);
         progressBar.setVisibility(View.VISIBLE);
@@ -169,15 +167,12 @@ public class LoginActivity extends AppCompatActivity {
                     til1.setError("No user");
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
-
-
 
     public void createanaccount(View view) {
         Intent i = new Intent(this, CreateaccountActivity.class);
@@ -248,4 +243,8 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void forgot(View view) {
+        Intent i=new Intent(getApplicationContext(),ForgotPassword.class);
+        startActivity(i);
+    }
 }
