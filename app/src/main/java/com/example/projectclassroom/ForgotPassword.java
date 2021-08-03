@@ -70,6 +70,8 @@ public class ForgotPassword extends AppCompatActivity {
                 if (snapshot.exists()) {
                     if (newpasswd.equals(confirmpasswd)) {
                         reference.child(uname).child("password").setValue(confirmpasswd);
+                        Toast.makeText(ForgotPassword.this, "Successfully Password Changed", Toast.LENGTH_SHORT).show();
+                        onBackPressed();
                     } else {
                         Toast.makeText(ForgotPassword.this, "Confirm password is not same as New password", Toast.LENGTH_SHORT).show();
                     }
