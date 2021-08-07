@@ -101,7 +101,6 @@ public class EnrollFragment extends Fragment {
                 adapter.notifyDataSetChanged();
                 joinclass.animate().alpha(1).setDuration(500).start();
                 progressBar.setVisibility(View.GONE);
-
                 swipeRefreshLayout=v.findViewById(R.id.swipe);
                 swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                     @Override

@@ -102,7 +102,7 @@ public class AttendenceInterface extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                    Map<Object, Object> code = (Map<Object, Object>) dataSnapshot1.getValue();
+                    Map<String, Object> code = (Map<String, Object>) dataSnapshot1.getValue();
                     assert code != null;
                     if (code.get("joinclass") == null) continue;
                     Map<String, Object> code1 = (Map<String, Object>) code.get("joinclass");
@@ -198,12 +198,7 @@ public class AttendenceInterface extends AppCompatActivity {
             Log.d("studentstotal", stucount + "");
             Log.d("presenttotal", presentcount + "");
             Log.d("absenttotal", absentcount + "");
-            builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
+            builder.setPositiveButton("Ok", (dialog, which) -> dialog.dismiss());
             AlertDialog dialog1 = builder.create();
             dialog1.show();
         }
