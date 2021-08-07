@@ -45,7 +45,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView19"
+                android:id="@+id/settingsuname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -61,7 +61,7 @@
                 app:layout_constraintTop_toTopOf="@+id/circleImageView" />
 
             <TextView
-                android:id="@+id/textView24"
+                android:id="@+id/settingsemail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
@@ -69,8 +69,8 @@
                 android:padding="5dp"
                 android:text="vamsi@gmail.com"
                 app:layout_constraintBottom_toBottomOf="@+id/circleImageView"
-                app:layout_constraintStart_toStartOf="@+id/textView19"
-                app:layout_constraintTop_toBottomOf="@+id/textView19"
+                app:layout_constraintStart_toStartOf="@+id/settingsuname"
+                app:layout_constraintTop_toBottomOf="@+id/settingsuname"
                 app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -145,11 +145,25 @@
         app:layout_constraintVertical_bias="0.0">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/settingspasswd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#FFFFFF"
             android:hint="Enter New Password"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#FFB700"
+        android:text="submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/passwdtil"
+        app:layout_constraintStart_toStartOf="@+id/passwdtil"
+        app:layout_constraintTop_toBottomOf="@+id/passwdtil"
+        app:layout_constraintVertical_bias="0.35000002" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
