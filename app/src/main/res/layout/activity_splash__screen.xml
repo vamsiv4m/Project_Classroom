@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/carter_one"
-        android:text="KoalaBear"
+        android:text="StudyRoom"
         android:textColor="#684747"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"

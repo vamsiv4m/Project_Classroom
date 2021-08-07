@@ -19,11 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectClassroom"
         tools:ignore="AllowBackup">
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name="appsettings.AppSettings"></activity>
+        <activity android:name=".ForgotPassword" />
         <activity android:name="sharefiles.DocumentViewer" />
         <activity android:name="attendence.Sheet" />
         <activity android:name="attendence.Attendance_Sheet" />
-        <activity android:name="attendence.AttendenceInterface"></activity>
+        <activity android:name="attendence.AttendenceInterface" />
         <activity android:name="editclass.EditClass" />
         <activity android:name=".Sharewithclass" />
         <activity android:name=".InsideClassDetails" />

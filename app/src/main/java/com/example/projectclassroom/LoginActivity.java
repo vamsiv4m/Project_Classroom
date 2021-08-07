@@ -1,12 +1,19 @@
 package com.example.projectclassroom;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.SettingInjectorService;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -33,6 +40,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.net.NetworkInterface;
+
 public class LoginActivity extends AppCompatActivity {
     EditText username;
     EditText password;
@@ -41,26 +50,24 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout til1, til2;
     ProgressBar progressBar;
     SharedPreferences sharedPreferences;
-    private int RC_SIGN_IN = 123;
+    private final int RC_SIGN_IN = 123;
     private GoogleSignInClient mGoogleSignInClient;
     private FirebaseAuth mAuth;
     private static final String filename = "login";
     private static final String user="username";
     private static final String email="email";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         mAuth = FirebaseAuth.getInstance();
         createRequest();
-
         sharedPreferences=getSharedPreferences(filename, Context.MODE_PRIVATE);
         login= (Button) findViewById(R.id.loginBtn);
-
         if(sharedPreferences.contains(user)){
             Intent i=new Intent(this,MainActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -71,13 +78,40 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!validationUsername() | !validationpassword()) {
+                if (!isConnected(LoginActivity.this)){
+                    AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this);
+                    builder.setMessage("Please Connect to the Internet to proceed").setCancelable(false)
+                            .setPositiveButton("Connect", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                                }
+                            }).setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            finish();
+                        }
+                    });
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+                else if (!validationUsername() | !validationpassword()) {
                     return;
                 } else {
                     userlogin();
                 }
             }
         });
+    }
+
+    private boolean isConnected(LoginActivity loginActivity) {
+        ConnectivityManager connectivityManager= (ConnectivityManager) loginActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiinfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo mobileinfo=connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifiinfo!=null && wifiinfo.isConnected() || mobileinfo!=null && mobileinfo.isConnected()){
+            return true;
+        }
+        return false;
     }
 
     @Override

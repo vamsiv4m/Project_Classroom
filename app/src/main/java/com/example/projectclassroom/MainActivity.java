@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapter.ClassAdapter;
+import appsettings.AppSettings;
 import fragments.EnrollFragment;
 import fragments.TeachFragment;
 import model.FetchData;
@@ -94,7 +95,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         swipeRefreshLayout = findViewById(R.id.swipe);
         navigation = findViewById(R.id.navigation);
         navigationDrawer();
-
         runfragment();
         bottomnav();
 
@@ -180,8 +180,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent i = new Intent(getApplicationContext(), LoginActivity.class);
             startActivity(i);
             finish();
-        } else {
-
+        } else if (item.getItemId()==R.id.a){
+            Intent i=new Intent(getApplicationContext(), AppSettings.class);
+            startActivity(i);
         }
         return true;
     }
