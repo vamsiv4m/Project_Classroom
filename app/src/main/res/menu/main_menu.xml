@@ -7,12 +7,7 @@
             android:title="Settings" />
         <item
             android:id="@+id/b"
-
-            android:title="Help And Feedback" />
-
-        <item
-            android:id="@+id/c"
-            android:title="Terms and Privacy" />
+            android:title="Contact" />
 
     </group>
     <group>

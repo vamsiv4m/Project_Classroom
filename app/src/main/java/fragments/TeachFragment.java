@@ -54,7 +54,7 @@ public class TeachFragment extends Fragment {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                SharedPreferences sharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences(filename, Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences(filename, Context.MODE_PRIVATE);
                 String a = sharedPreferences.getString(user, "");
                 joinDataList.clear();
                 for (DataSnapshot dataSnapshot1 : snapshot.child(a).child("class").getChildren()) {

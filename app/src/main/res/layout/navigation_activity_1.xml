@@ -11,12 +11,11 @@
     layout="@layout/activity_main"/>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:background="@color/white"
         app:headerLayout="@layout/main_header"
-        android:id="@+id/navigation"
-        app:menu="@menu/main_menu"
-        />
+        app:menu="@menu/main_menu" />
 </androidx.drawerlayout.widget.DrawerLayout>
