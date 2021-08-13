@@ -130,9 +130,8 @@ public class Sheet extends AppCompatActivity {
                             subjectname.setText(arrayList.get(0) +"");
                         }
                         catch (Exception e){
-                            Toast.makeText(Sheet.this, "This student is not joined in that month.", Toast.LENGTH_LONG).show();
                             AlertDialog.Builder builder=new AlertDialog.Builder(Sheet.this);
-                            builder.setTitle("StudyRoom Analytics").setMessage("Student is not joined in this month").setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            builder.setTitle("StudyRoom Analytics").setMessage("Student is not joined yet on this month !").setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     onBackPressed();
