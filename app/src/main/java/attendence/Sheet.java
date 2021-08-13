@@ -131,7 +131,7 @@ public class Sheet extends AppCompatActivity {
                         }
                         catch (Exception e){
                             AlertDialog.Builder builder=new AlertDialog.Builder(Sheet.this);
-                            builder.setTitle("StudyRoom Analytics").setMessage("Student is not joined yet on this month !").setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                            builder.setTitle("StudyRoom Analytics").setIcon(R.drawable.ic_baseline_analytics_24).setMessage("Student is not joined yet on this month !").setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     onBackPressed();
