@@ -19,29 +19,39 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjectClassroom"
         tools:ignore="AllowBackup">
-        <activity android:name="appsettings.AppSettings"/>
-        <activity android:name=".ForgotPassword" />
-        <activity android:name="sharefiles.DocumentViewer" />
-        <activity android:name="attendence.Sheet" />
-        <activity android:name="attendence.Attendance_Sheet" />
-        <activity android:name="attendence.AttendenceInterface" />
+        <activity android:name="appsettings.AppSettings"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ForgotPassword"
+            android:screenOrientation="portrait"/>
+        <activity android:name="sharefiles.DocumentViewer"
+            android:screenOrientation="portrait"/>
+        <activity android:name="attendence.Sheet"
+            android:screenOrientation="portrait"/>
+        <activity android:name="attendence.Attendance_Sheet"
+            android:screenOrientation="portrait"/>
+        <activity android:name="attendence.AttendenceInterface"
+            android:screenOrientation="portrait"/>
         <activity android:name="editclass.EditClass" />
-        <activity android:name=".Sharewithclass" />
-        <activity android:name=".InsideClassDetails" />
+        <activity android:name=".Sharewithclass"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".InsideClassDetails"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".Splash_Screen"
             android:theme="@style/Theme.Transparent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".JoinClass" />
-        <activity android:name=".CreateaccountActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".CreateClass" />
-        <activity android:name=".MainActivity" />
+        <activity android:name=".JoinClass"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".CreateaccountActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".LoginActivity" android:screenOrientation="portrait"/>
+        <activity android:name=".CreateClass" android:screenOrientation="portrait"/>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"/>
 
         <meta-data
             android:name="preloaded_fonts"

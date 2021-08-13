@@ -2,8 +2,10 @@ package attendence;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,6 +16,8 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.projectclassroom.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -122,7 +126,21 @@ public class Sheet extends AppCompatActivity {
                         attendancename.setText(name+"");
                         totalworkingdays.setText(snapshot.getChildrenCount()+"");
                         totalpresentdays.setText(c+"");
-                        subjectname.setText(arrayList.get(0) +"");
+                        try {
+                            subjectname.setText(arrayList.get(0) +"");
+                        }
+                        catch (Exception e){
+                            Toast.makeText(Sheet.this, "This student is not joined in that month.", Toast.LENGTH_LONG).show();
+                            AlertDialog.Builder builder=new AlertDialog.Builder(Sheet.this);
+                            builder.setTitle("StudyRoom Analytics").setMessage("Student is not joined in this month").setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    onBackPressed();
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
                         totalview.setText(c+" / "+snapshot.getChildrenCount()+ " Days");
                         percentage.setText((float)c/(float)snapshot.getChildrenCount()*100 +"%");
                         Log.d("percentage",(((float)c/(float)snapshot.getChildrenCount())*100 +""));

@@ -56,7 +56,13 @@ public class AppSettings extends AppCompatActivity {
         Button changepass=findViewById(R.id.changepasswd);
         settingspasswd=findViewById(R.id.settingspasswd);
         passwdtil=findViewById(R.id.passwdtil);
-        changepass.setOnClickListener(view -> passwdtil.setEnabled(true));
+       changepass.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               passwdtil.setEnabled(true);
+                submit.setEnabled(true);
+           }
+       });
         submit.setOnClickListener(view -> {
             String passwd=settingspasswd.getText().toString();
             String uname=sharedPreferences.getString(user,"");
